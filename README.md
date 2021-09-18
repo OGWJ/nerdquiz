@@ -1,12 +1,17 @@
 # nerdquiz
 
 ## About
+This is a multiplayer(hopefully) nerd quiz game. 
 
 ## Installation
 
 ## Usage
 
-## Technology
+## Planning tools
+* [Miro](https://miro.com/)
+* GitHub KanBan Board
+
+## Technologies
 
 * HTML/CSS
 * JavaScript
