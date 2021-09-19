@@ -1,0 +1,18 @@
+* {
+  font-size: 20px;
+  font-family: "Bangers", cursive;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: black;
+  text-shadow: 2px 2px #ea323d;
+}
+
+nav {
+  background-color: #fee242;
+}
