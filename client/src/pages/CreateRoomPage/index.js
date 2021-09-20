@@ -10,7 +10,6 @@ const CreateRoomPage = () => {
           <option value="C">C</option>
         </select>
       </form>
-
     </>
   );
 };

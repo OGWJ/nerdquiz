@@ -13,3 +13,8 @@ td, th {
 .leaderboard-container {
     max-width: 600px;
 }
+
+.user-card:hover {
+    transform: none;
+    box-shadow: none;
+}

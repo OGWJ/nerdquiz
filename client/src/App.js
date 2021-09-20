@@ -14,28 +14,37 @@ import './style.css';
 
 function App() {
   return (
+
     <div className='vh-100'>
       <Header />
       <main>
+
         <Switch>
+
           <Route exact path="/">
             <LandingPage />
           </Route>
+
           <Route path="/home/:username">
             <HomePage />
           </Route>
+
           <Route path="/create-room">
             <CreateRoomPage />
           </Route>
-          <Route path="/waiting-room/:room-id">
+
+          <Route path="/waiting-room/:roomId">
             <WaitingRoomPage />
           </Route>
-          <Route path="/quiz/:room-id">
+
+          <Route path="/quiz/:roomId">
             <QuizPage />
           </Route>
+
           <Route path="/leaderboard">
             <LeaderboardPage />
           </Route>
+
         </Switch>
 
       </main>

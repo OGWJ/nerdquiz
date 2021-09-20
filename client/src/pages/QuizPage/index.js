@@ -1,10 +1,14 @@
 import React from "react";
 
+import './style.css'
+
 const QuizPage = () => {
   return (
-    <>
-      <h3>Please wait for your turn</h3>
-    </>
+    <div className='container p-nav'>
+      <div className='container d-flex text-center'>
+        <h3>Please wait for your turn</h3>
+      </div>
+    </div>
   );
 };
 
