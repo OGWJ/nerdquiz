@@ -13,20 +13,18 @@ const Header = () => {
   }
 
   return (
-    <div>
-      <nav className="navbar navbar-inverse">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="#">
-              Nerd Quiz
-            </a>
-          </div>
-          <ul className="nav navbar-nav navbar-right">
-            <li>{navLink}</li>
-          </ul>
+    <nav className="navbar fixed-top">
+      <div className="container-fluid">
+        <div className="navbar-header">
+          <a className="navbar-brand" href="#">
+            Nerd Quiz
+          </a>
         </div>
-      </nav>
-    </div>
+        <ul className="nav navbar-nav navbar-right">
+          <li>{navLink}</li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 
