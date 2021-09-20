@@ -1,0 +1,15 @@
+.p-nav {
+    padding-top: 64px;
+}
+
+tr {
+    border-bottom: solid 5px black;
+}
+
+td, th {
+    border: none !important;
+}
+
+.leaderboard-container {
+    max-width: 600px;
+}
