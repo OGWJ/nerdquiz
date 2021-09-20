@@ -1,7 +1,14 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { Header } from "./layout";
-import { CreateRoomPage, Home, LandingPage, WaitingRoomPage } from "./pages";
+import {
+  CreateRoomPage,
+  HomePage,
+  LandingPage,
+  WaitingRoomPage,
+  QuizPage,
+  LeaderboardPage
+} from "./pages";
 
 function App() {
   return (
@@ -9,7 +16,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/">
-          <Home />
+          <HomePage />
         </Route>
         <Route exact path="/landing-page/:username">
           <LandingPage />
