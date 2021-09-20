@@ -10,31 +10,36 @@ import {
   LeaderboardPage
 } from "./pages";
 
+import './style.css';
+
 function App() {
   return (
-    <>
+    <div className='vh-100'>
       <Header />
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        <Route exact path="/landing-page/:username">
-          <LandingPage />
-        </Route>
-        <Route path="/create-room">
-          <CreateRoomPage />
-        </Route>
-        <Route path="/waiting-room/:room-id">
-          <WaitingRoomPage />
-        </Route>
-        <Route path="/quiz/:room-id">
-          <QuizPage />
-        </Route>
-        <Route path="/leaderboard">
-          <LeaderboardPage />
-        </Route>
-      </Switch>
-    </>
+      <main>
+        <Switch>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route path="/home/:username">
+            <HomePage />
+          </Route>
+          <Route path="/create-room">
+            <CreateRoomPage />
+          </Route>
+          <Route path="/waiting-room/:room-id">
+            <WaitingRoomPage />
+          </Route>
+          <Route path="/quiz/:room-id">
+            <QuizPage />
+          </Route>
+          <Route path="/leaderboard">
+            <LeaderboardPage />
+          </Route>
+        </Switch>
+
+      </main>
+    </div>
   );
 }
 
