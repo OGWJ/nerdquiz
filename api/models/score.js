@@ -11,7 +11,9 @@ class Score {
   static get all() {
     return new Promise(async (res, rej) => {
       try {
-        let result = await db.query(`SELECT * FROM scores;`);
+        let result = await db.query(
+          `SELECT * FROM scores ORDER BY score DESC LIMIT 10;`
+        );
         let scores = result.rows.map((r) => new Score(r));
         res(scores);
       } catch (err) {
@@ -40,7 +42,7 @@ class Score {
     return new Promise(async (res, rej) => {
       try {
         let result = await db.query(
-          `SELECT * FROM scores WHERE genre = $1 ORDER BY score DESC;`,
+          `SELECT * FROM scores WHERE genre = $1 ORDER BY score DESC LIMIT 10;`,
           [genre]
         );
         let scores = result.rows.map((r) => new Score(r));
