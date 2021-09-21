@@ -41,19 +41,20 @@ const selectQuestions = (allQuestions, correct_answer) =>{
     let numClients = clients.length
     
     //iterate over questions, making sure each client gets asked ten questions
-    for(let currentQuestion = 0; currentQuestion < (numClients*10);)
+    for(let currentQuestion = 0; currentQuestion < (numClients*10);currentQuestion++)
     {
        let question = (JSON.stringify(allQuestions.questions[currentQuestion], JSON.stringify(allQuestions.answers[currentQuestion])))
-       socket.emit("question", question)
-       socket.on("answer", (answer)=>
-       {
-         //if it is equal to the correct answer
-         if(answer === correct_answer[currentQuestion])
-         {
-           // add one to the score of that user (or however many points)
-         }
-         currentQuestion++
-      })
+       
+       //socket.emit("question", question) ---- uncommented once listeners are added
+       //socket.on("answer", (answer)=>
+      //  {
+      //    //if it is equal to the correct answer
+      //    if(answer === correct_answer[currentQuestion])
+      //    {
+      //      // add one to the score of that user (or however many points)
+      //    }
+      //    //currentQuestion++  
+      // })
     }
   }
 });
