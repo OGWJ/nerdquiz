@@ -28,9 +28,9 @@ const CreateRoomPage = () => {
     <div className="p-nav w-100 d-flex justify-content-center">
       <form name="create-room-form" onSubmit={createRoomHandler}>
         <select id="category-select" className="form-select my-4 text-center">
-          <option value="A">Video Games</option>
-          <option value="B">Board Games</option>
-          <option value="C">Comics</option>
+          <option value="15">Video Games</option>
+          <option value="16">Board Games</option>
+          <option value="29">Comics</option>
         </select>
         <select
           id="select-difficulty"
