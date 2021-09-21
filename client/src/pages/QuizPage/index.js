@@ -21,6 +21,7 @@ const QuizPage = () => {
 
   const exitHandler = () => {
     // stub
+    // call userExitsRoomHandler(), then
     game.setState(GameStateTypes.QUIZ_FINISHED);
   }
 

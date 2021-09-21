@@ -1,9 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
+import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import { createRoomHandler } from "../../handlers/createRoomHandler";
 import "./style.css";
 
 const CreateRoomPage = () => {
+  const game = useContext(GameContext);
   const [selectDifficultyColor, setSelectDifficultyColor] = useState("EASY");
 
   const handleChange = (e) => {
@@ -24,9 +25,14 @@ const CreateRoomPage = () => {
   // useEffect(() => {
   // }, [selectDifficultyColor])
 
+  const createRoomHandlerWrapper = (e) => {
+    createRoomHandler(e);
+    game.setState(GameStateTypes.WAITING_ROOM);
+  }
+
   return (
     <div className="p-nav w-100 d-flex justify-content-center">
-      <form name="create-room-form" onSubmit={createRoomHandler}>
+      <form name="create-room-form" onSubmit={createRoomHandlerWrapper}>
         <select id="category-select" className="form-select my-4 text-center">
           <option value="15">Video Games</option>
           <option value="16">Board Games</option>
