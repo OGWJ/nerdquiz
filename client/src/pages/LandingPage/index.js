@@ -8,7 +8,7 @@ const LandingPage = () => {
   const history = useHistory();
   const usernameSubmitHandler = (e) => {
     e.preventDefault();
-    const name = e.target.value;
+    const name = e.target[0].value;
     localStorage.setItem("username", name);
     history.push(`/home/${name}`);
   };
