@@ -18,16 +18,22 @@ const LandingPage = () => {
     <div className="d-flex justify-content-center">
       <div className="vh-100 d-flex flex-column justify-content-center">
         <form name="landingpage-form" onSubmit={usernameSubmitHandler}>
-          <label htmlFor="username-input" style={{ visibility: "hidden" }}>
-            Enter your name
-          </label>
-          <br />
-          <input
-            id="username-input"
-            placeholder="Enter your username"
-            autoFocus
-          />
-          <input type="submit" />
+          <div className='col'>
+            <label htmlFor="username-input" style={{ visibility: "hidden" }}>
+              Enter your name
+            </label>
+            <br />
+            <input
+              id="username-input"
+              placeholder="Enter your username"
+              autoFocus
+              required
+              className='mb-2'
+            />
+          </div>
+          <div className='col'>
+            <input type="submit" value="lets go!" className='btn btn-success' />
+          </div>
         </form>
       </div>
     </div>

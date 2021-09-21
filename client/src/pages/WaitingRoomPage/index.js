@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { socket } from "../../service/socket";
 import { userStartsQuizHandler } from "../../handlers/userRoomInteractionHandlers";
-import './style.css';
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
-
+import Container from "react-bootstrap/Container";
+import './style.css';
 
 const getPlayersInRoom = async () => {
   // return await fetch()
@@ -61,21 +61,30 @@ const WaitingRoomPage = () => {
   }
 
   return (
-    <div className='p-nav'>
-      <button onClick={handleExitRoom}>Exit room</button>
-      <h3 className='pt-4 px-4'>{game.roomAdmin}'s Room</h3>
-      <h5 className='px-4'><small>Category is</small> <em>Video Games</em></h5>
-      <h5 className='px-4'><small>Difficulty is</small> <em>Hard!</em></h5>
-      <ul>
-        {
-          players.map(player => {
-            return (<li className='card user-card text-center d-flex flex-column justify-content-center my-3'
-              style={{ backgroundColor: '#4e4d83', color: '#ffffff' }}>{player}</li>);
-          })
-        }
-      </ul>
-      {isUsersRoom ? <button onClick={handleStuff}>Start Quiz</button> : null}
-    </div >
+    <Container className='p-nav d-flex justify-content-center'>
+      <Container className='row vw-100'>
+        <Container className='col-md'>
+          <h3 className='pt-4'>{game.roomAdmin}'s Room</h3>
+          <h5 className=''><small>Category is</small> <em>Video Games</em></h5>
+          <h5 className=''><small>Difficulty is</small> <em>Hard!</em></h5>
+          <Container className='d-flex justify-content-center'>
+            {isUsersRoom ? <button onClick={handleStuff} className='m-3'>Start Quiz</button> : null}
+            <button onClick={handleExitRoom} className='m-3'>Exit room</button>
+          </Container>
+        </Container>
+        <Container className='col-sm'>
+          <ul>
+            <h3 className='pt-4'>Who's Playin'?</h3>
+            {
+              players.map(player => {
+                return (<li className='card user-card text-center d-flex flex-column justify-content-center my-3'
+                  style={{ backgroundColor: '#4e4d83', color: '#ffffff' }}>{player}</li>);
+              })
+            }
+          </ul>
+        </Container>
+      </Container>
+    </Container >
   );
 };
 
