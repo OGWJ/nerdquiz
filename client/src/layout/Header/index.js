@@ -17,9 +17,9 @@ const Header = () => {
     <nav className="navbar fixed-top">
       <div className="container-fluid">
         <div className="navbar-header">
-          <a className="navbar-brand" href="#">
+          <NavLink to='' className="navbar-brand">
             Nerd Quiz
-          </a>
+          </NavLink>
         </div>
         <ul className="nav navbar-nav navbar-right">
           <li>{navLink}</li>
