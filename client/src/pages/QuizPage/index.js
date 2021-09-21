@@ -1,4 +1,6 @@
 import React, { useState, useContext } from "react";
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import Container from 'react-bootstrap/Container'
 import { userExitsRoomHandler } from "../../handlers/userRoomInteractionHandlers";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import { socket } from "../../service/socket";
@@ -30,14 +32,16 @@ const QuizPage = () => {
     game.setState(GameStateTypes.QUIZ_FINISHED);
   }
 
-
   return (
 
     <div className='container p-nav'>
       <button onClick={exitHandler}>Exit Quiz</button>
-      <div className='container d-flex text-center'>
+      <div className='container d-flex flex-column text-center'>
         <h3>Question is: {question}</h3>
         <h4>secondsRemaining</h4>
+        <Container>
+          <ProgressBar now={60} />
+        </Container>
         {isUserTurn ?
           <div>
             {quizInfo.options.map(option => {
@@ -45,7 +49,7 @@ const QuizPage = () => {
             })}
           </div> : <h4>Please wait for your turn</h4>}
       </div>
-    </div>
+    </div >
   );
 };
 
