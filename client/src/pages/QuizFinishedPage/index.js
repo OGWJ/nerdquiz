@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 
 import './style.css'
 
 const QuizFinishedPage = () => {
+
+  const game = useContext(GameContext);
+
+  const handleClick = () => {
+    game.setState(GameStateTypes.HOME);
+  }
+
   return (
     <>
       <div className='container p-nav leaderboard-container'>
@@ -31,7 +39,7 @@ const QuizFinishedPage = () => {
           </tbody>
         </table>
 
-
+        <button onClick={handleClick}>Go Again?</button>
       </div>
     </>
   )
