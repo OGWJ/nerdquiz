@@ -68,8 +68,8 @@ const WaitingRoomPage = () => {
           <h5 className=''><small>Category is</small> <em>Video Games</em></h5>
           <h5 className=''><small>Difficulty is</small> <em>Hard!</em></h5>
           <Container className='d-flex justify-content-center'>
-            {isUsersRoom ? <button onClick={handleStuff} className='m-3'>Start Quiz</button> : null}
-            <button onClick={handleExitRoom} className='m-3'>Exit room</button>
+            {isUsersRoom ? <button onClick={handleStuff} className='btn btn-success m-3'>Start Quiz</button> : null}
+            <button onClick={handleExitRoom} className='btn btn-danger m-3'>Exit room</button>
           </Container>
         </Container>
         <Container className='col-sm'>
