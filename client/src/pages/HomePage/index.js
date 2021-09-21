@@ -4,7 +4,6 @@ import { useParams } from "react-router";
 import './style.css'
 
 const HomePage = () => {
-  const params = useParams();
 
   const getCardColors = difficulty => {
     // (OGWJ) TODO: should make difficulties and colors enums for robustness
@@ -20,7 +19,7 @@ const HomePage = () => {
 
   return (
     <div className='container mt-4 p-nav'>
-      <h3 className='m-4'>Welcome {params.username}</h3>
+      <h3 className='m-4'>Welcome {localStorage.getItem('username')}</h3>
       <div className='container d-flex justify-content-center'>
         <button className='btn btn-secondary'>Create a Room</button>
       </div>
