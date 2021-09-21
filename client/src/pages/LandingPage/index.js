@@ -10,7 +10,8 @@ const LandingPage = () => {
     e.preventDefault();
     const name = e.target[0].value;
     localStorage.setItem("username", name);
-    history.push(`/home/${name}`);
+    // HERE UPDATE GAME STATE USING CONTEXT PROVIDER
+    // history.push(`/home/${name}`);
   };
 
   return (

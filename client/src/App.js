@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Header } from "./layout";
 import {
@@ -7,12 +7,16 @@ import {
   LandingPage,
   WaitingRoomPage,
   QuizPage,
+  QuizFinishedPage,
   LeaderboardPage
 } from "./pages";
 
 import './style.css';
+import GameStateTypes from './models/GameStateTypes';
+const GameContext = React.createContext(null);
 
 function App() {
+
   return (
 
     <div className='vh-100'>
@@ -22,23 +26,9 @@ function App() {
         <Switch>
 
           <Route exact path="/">
-            <LandingPage />
-          </Route>
-
-          <Route path="/home/:username">
-            <HomePage />
-          </Route>
-
-          <Route path="/create-room">
-            <CreateRoomPage />
-          </Route>
-
-          <Route path="/waiting-room/:roomId">
-            <WaitingRoomPage />
-          </Route>
-
-          <Route path="/quiz/:roomId">
-            <QuizPage />
+            <GameContext.Provider value={GameStateTypes.LANDING}>
+              <GamePage />
+            </GameContext.Provider>
           </Route>
 
           <Route path="/leaderboard">
@@ -50,6 +40,25 @@ function App() {
       </main>
     </div>
   );
+}
+
+
+const GamePage = () => {
+  const gameState = useContext(GameContext);
+  switch (gameState) {
+    case 'LANDING':
+      return <LandingPage />;
+    case 'HOME':
+      return <HomePage />;
+    case 'CREATE_ROOM':
+      return <CreateRoomPage />;
+    case 'WAITING_ROOM':
+      return <WaitingRoomPage />;
+    case 'QUIZ':
+      return <QuizPage />;
+    case 'QUIZ_FINISHED':
+      return <QuizFinishedPage />;
+  }
 }
 
 export default App;
