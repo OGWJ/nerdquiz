@@ -35,24 +35,26 @@ io.on("connection", (socket) => {
   getQuestions(roomSettings.admin, roomSettings.category, roomSettings.difficulty)
   let clients = ["one", "two", "three"];
 
-const selectQuestions = (qAndAs, correct_answer) =>{
-    console.log(qAndAs)
+const selectQuestions = (allQuestions, correct_answer) =>{
+
     // get length of client
     let numClients = clients.length
     
-    
-    for(let qsAsked = 0; qsAsked < (numClients*10);qsAsked++){
-       let question = (JSON.stringify(qAndAs.questions[qsAsked], JSON.stringify(qAndAs.answers[qsAsked])))
-       console.log(correct_answer[qsAsked])
+    //iterate over questions, making sure each client gets asked ten questions
+    for(let currentQuestion = 0; currentQuestion < (numClients*10);)
+    {
+       let question = (JSON.stringify(allQuestions.questions[currentQuestion], JSON.stringify(allQuestions.answers[currentQuestion])))
        socket.emit("question", question)
-       socket.on("answer", (answer)=>{
+       socket.on("answer", (answer)=>
+       {
          //if it is equal to the correct answer
-         if(answer === correct_answer[qsAsked]){
+         if(answer === correct_answer[currentQuestion])
+         {
            // add one to the score of that user (or however many points)
          }
-        qsAsked++
-       }       
-       )}
+         currentQuestion++
+      })
+    }
   }
 });
 
