@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { socket } from "../../service/socket";
 import { userEntersRoomHandler } from '../../handlers/userRoomInteractionHandlers';
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
+import Container from "react-bootstrap/Container";
 
 import './style.css'
 import { useEffect } from "react";
@@ -57,7 +58,7 @@ const HomePage = () => {
 
 
   return (
-    <div className='container mt-4 p-nav'>
+    <Container className='mt-4 p-nav text-center'>
       <h3 className='m-4'>Welcome {localStorage.getItem('username')}</h3>
       <div className='container d-flex justify-content-center'>
         <button className='btn btn-secondary' onClick={handleCreateRoom}>Create a Room</button>
@@ -78,7 +79,7 @@ const HomePage = () => {
           )
         })}
       </ul>
-    </div>
+    </Container>
   )
 };
 

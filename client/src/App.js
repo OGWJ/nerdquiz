@@ -12,6 +12,7 @@ import {
 } from "./pages";
 
 import './style.css';
+import './fonts.css';
 import { GameContext, GameStateTypes } from './models/GameStateTypes';
 
 function App() {
@@ -48,7 +49,9 @@ const GamePage = () => {
   const game = useContext(GameContext);
   switch (game.getState) {
     case 'LANDING':
-      return <LandingPage />;
+      // return <LandingPage />;
+      // DEBUG
+      return <HomePage />
     case 'HOME':
       return <HomePage />;
     case 'CREATE_ROOM':
