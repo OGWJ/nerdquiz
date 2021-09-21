@@ -1,3 +1,4 @@
+
 import { socket } from "../service/socket";
 
 export const createRoomHandler = (e) => {
@@ -9,10 +10,11 @@ export const createRoomHandler = (e) => {
     difficulty: settings[1].value
   };
   socket.emit("create room", roomSettings);
-  socket.on("questions", (questions)=>{
-    console.log(questions[0])
+  
+  socket.on("questions", (question)=>{
+    console.log(question)
+    //do soemthing here with the questions
+
   })
-  socket.on("answers", (answers)=>{
-    console.log(answers[0])
-  })
+
 };
