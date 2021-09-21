@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import "./style.css";
 
 const Header = () => {
@@ -16,9 +16,9 @@ const Header = () => {
     <nav className="navbar fixed-top">
       <div className="container-fluid">
         <div className="navbar-header">
-          <a className="navbar-brand" href="#">
+          <NavLink to='' className="navbar-brand">
             Nerd Quiz
-          </a>
+          </NavLink>
         </div>
         <ul className="nav navbar-nav navbar-right">
           <li>{navLink}</li>

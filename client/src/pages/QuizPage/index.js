@@ -18,9 +18,15 @@ const QuizPage = () => {
 
   const startSimulateClock = () => {
     let localCount = count;
-    setInterval(() => {
+    let clock = setInterval(() => {
+      // use clearInterval(clock) to stop this from somewhere else
+      // console.log(game.getState);
+      // if (game.getState != GameStateTypes.QUIZ) return;
       localCount--;
       console.log(localCount);
+
+      // issue here with count and local value in interval loop
+      // maybe clear interval at end, update value and recursively call
 
       if (localCount > 0) {
         setCount(prev => prev - 1);
@@ -35,6 +41,7 @@ const QuizPage = () => {
     }, 1000);
   }
 
+  // should handle component unmount with useEffect cleanup
   useEffect(() => {
     startSimulateClock();
   }, [])
@@ -42,7 +49,9 @@ const QuizPage = () => {
   const submitAnswer = () => {
     // stub
     console.log('submitted answer')
-    setIsUserTurn(prev => !prev);
+    // Instead always 10s e.g. 'lock in answer'
+    // setIsUserTurn(prev => !prev);
+    // setCount(10);
   }
 
   // add logic to listen for change of user turn
@@ -74,9 +83,9 @@ const QuizPage = () => {
           <ProgressBar animated now={count * 10} className='transition-one-second' />
         </Container>
         {isUserTurn ?
-          <div>
+          <div className='row'>
             {options.map(option => {
-              return <button onClick={() => submitAnswer(option)} className='btn btn-primary m-4'>{option}</button>
+              return (<div className='col'><button onClick={() => submitAnswer(option)} className='btn btn-primary m-4'>{option}</button></div>)
             })}
           </div> : <div>
             <h4>Please wait for your turn</h4>
