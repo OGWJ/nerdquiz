@@ -7,3 +7,7 @@ export const userEntersRoomHandler = (roomId) => {
 export const userExitsRoomHandler = () => {
     socket.emit('user exit room', localStorage.getItem('username'));
 }
+
+export const userStartsQuizHandler = (roomId) => {
+    socket.emit('user start quiz', roomId);
+}

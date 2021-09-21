@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useContext } from "react";
+import { userExitsRoomHandler } from "../../handlers/userRoomInteractionHandlers";
+import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import { socket } from "../../service/socket";
 
 import './style.css'
@@ -8,6 +9,7 @@ const QuizPage = () => {
 
   const [isUserTurn, setIsUserTurn] = useState(false);
   const [question, setQuestion] = useState('');
+  const game = useContext(GameContext);
 
   // add logic to listen for change of user turn
   socket.on('answer question', (quizInfo) => {
@@ -17,9 +19,15 @@ const QuizPage = () => {
 
   })
 
+  const exitHandler = () => {
+    // stub
+    game.setState(GameStateTypes.QUIZ_FINISHED);
+  }
+
   return (
 
     <div className='container p-nav'>
+      <button onClick={exitHandler}>Exit Quiz</button>
       <div className='container d-flex text-center'>
         <h3>Question is: {question}</h3>
         {isUserTurn ?

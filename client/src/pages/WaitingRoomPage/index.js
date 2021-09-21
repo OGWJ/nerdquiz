@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { socket } from "../../service/socket";
+import { userStartsQuizHandler } from "../../handlers/userRoomInteractionHandlers";
 import './style.css';
+import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 
 const WaitingRoomPage = () => {
 
-  // todo get colors for each player
-  // with const colorList
-
+  const game = useContext(GameContext);
   const [players, setPlayers] = useState(['jessica', 'bill']);
 
   // Listen for others entering room to update the state
@@ -21,6 +21,26 @@ const WaitingRoomPage = () => {
 
   // TODO create color generation stuff
 
+  const isUsersRoom = () => {
+    // get username
+    // get admin username
+    // compare
+    // return
+    return true
+  };
+
+  const getRoomAdmin = () => {
+    // stub
+    return 'jessica';
+  }
+
+  const handleStuff = () => {
+    const roomId = getRoomAdmin();
+    userStartsQuizHandler(roomId);
+    // temp below
+    game.setState(GameStateTypes.QUIZ);
+  }
+
   return (
     <div className='p-nav'>
       <h3 className='pt-4 px-4'>Hostmame's Room</h3>
@@ -34,6 +54,7 @@ const WaitingRoomPage = () => {
           })
         }
       </ul>
+      {isUsersRoom ? <button onClick={handleStuff}>Start Quiz</button> : null}
     </div >
   );
 };
