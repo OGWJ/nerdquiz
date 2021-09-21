@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import "./style.css";
 
 const Header = () => {
@@ -7,9 +7,10 @@ const Header = () => {
   let navLink;
 
   if (location.pathname === "/leaderboard") {
-    navLink = <a href="http://localhost:8080">Back to Home</a>;
+    navLink = <NavLink activeClassName="home-link" to="/home/:username">Back to Home</NavLink>;
   } else {
-    navLink = <a href="http://localhost:8080/leaderboard">Leaderboard</a>;
+    navLink = <NavLink activeClassName="active" to="/leaderboard">Leaderboard</NavLink>;
+    //  navLink = <a href="http://localhost:8080/leaderboard">Leaderboard</a>; 
   }
 
   return (
