@@ -1,8 +1,10 @@
 services:
   api:
     container_name: quiz_api
+    expose:
+      - 5001
     ports:
-      - 3000:3000
+      - 5001:5001
     environment:
       - PGUSER=admin
       - PGHOST=db

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon socket.js",
     "seedDev": "node dbConfig/seedDev.js",
     "test": "jest --setupFiles ./tests/integration/config.js --verbose",
     "coverage": "jest --setupFiles ./tests/integration/config.js --coverage --verbose"
