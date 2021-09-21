@@ -1,0 +1,8 @@
+.form-select {
+    max-width: 400px;
+    border:none;
+}
+
+.form-select:focus {
+    /* outline-color: red; */
+}
