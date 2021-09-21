@@ -66,6 +66,11 @@ const QuizPage = () => {
     setCount(secondsRemaining);
   })
 
+  socket.on('question', (question)=>{
+    console.log(question)
+    setQuestion(question)
+  })
+
   const exitHandler = () => {
     // stub
     // call userExitsRoomHandler(), then
