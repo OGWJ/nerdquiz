@@ -1,10 +1,23 @@
 import React from "react";
+import { socket } from "../../service/socket";
 import './style.css';
 
 const WaitingRoomPage = () => {
 
   // todo get colors for each player
   // with const colorList
+
+  const [players, setPlayers] = useState([]);
+
+  // Listen for others entering room to update the state
+  socket.on('user enter room', eventInfo => {
+    setPlayers(prev => prev + eventInfo.player);
+  })
+
+  // Listen for other leaving room to update the state
+  socket.on('user exits room', eventInfo => {
+    setPlayers(prev => prev.filter(player => player != eventInfo.player));
+  })
 
   return (
     <div className='p-nav'>
