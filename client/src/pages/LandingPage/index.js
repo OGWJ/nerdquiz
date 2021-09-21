@@ -1,17 +1,17 @@
-import React from "react";
-// import { usernameSubmitHandler } from "../../handlers/usernameSubmitHandler";
-import { useHistory } from "react-router-dom";
+import React, { useContext } from "react";
+import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 
 import "./style.css";
 
 const LandingPage = () => {
-  const history = useHistory();
+
+  const game = useContext(GameContext);
+
   const usernameSubmitHandler = (e) => {
     e.preventDefault();
     const name = e.target[0].value;
     localStorage.setItem("username", name);
-    // HERE UPDATE GAME STATE USING CONTEXT PROVIDER
-    // history.push(`/home/${name}`);
+    game.setState(GameStateTypes.HOME);
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Header } from "./layout";
 import {
@@ -12,10 +12,11 @@ import {
 } from "./pages";
 
 import './style.css';
-import GameStateTypes from './models/GameStateTypes';
-const GameContext = React.createContext(null);
+import { GameContext, GameStateTypes } from './models/GameStateTypes';
 
 function App() {
+
+  const [gameState, setGameState] = useState(GameStateTypes.LANDING);
 
   return (
 
@@ -26,7 +27,7 @@ function App() {
         <Switch>
 
           <Route exact path="/">
-            <GameContext.Provider value={GameStateTypes.LANDING}>
+            <GameContext.Provider value={{ getState: gameState, setState: setGameState }}>
               <GamePage />
             </GameContext.Provider>
           </Route>
@@ -44,8 +45,8 @@ function App() {
 
 
 const GamePage = () => {
-  const gameState = useContext(GameContext);
-  switch (gameState) {
+  const game = useContext(GameContext);
+  switch (game.getState) {
     case 'LANDING':
       return <LandingPage />;
     case 'HOME':
@@ -58,6 +59,8 @@ const GamePage = () => {
       return <QuizPage />;
     case 'QUIZ_FINISHED':
       return <QuizFinishedPage />;
+    default:
+      return <h1>Error</h1>;
   }
 }
 
