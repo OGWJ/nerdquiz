@@ -1,14 +1,11 @@
+let clients = ["one", "two", "three"];
 
+const selectQuestions = (qAndAs) =>{
+    console.log(qAndAs)
+    // get length of client
+    let num = clients.length
 
-
-const [ questions, setQuestions] = useState([])
-async function getQuestions(cat, diff) {
-    const url = `https://opentdb.com/api.php?amount=50&category=${cat}&difficulty=${diff}`;
-    const { data } = await axios.get(url);
-    setQuestions(data.results)
-    return data.results;
 }
 
-
-console.log(questions)
-module.exports = getQuestions;
+module.exports = {selectQuestions}
+// function to send each question

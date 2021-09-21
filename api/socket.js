@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { GameConfig } = require('./models/gameConfig');
+const {selectQuestions} = require('./controllers/helpers/index')
 const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
@@ -27,9 +28,11 @@ io.on("connection", (socket) => {
       let questions = data.results.map(q => q.question)
       let answers = data.results.map(a => [a.correct_answer, ...a.incorrect_answers])
       let correct_answer = data.results.map(a => a.correct_answer)
-      
+      selectQuestions(GameConfig.create(admin, questions, answers))
       //emit Q&A to the front end
-      io.emit("questions", (GameConfig.create(admin, questions, answers))) 
+      //io.emit("questions", (GameConfig.create(admin, questions, answers))) 
+      // send questions and answers to function that will send them to users seperately
+
   }
   getQuestions(roomSettings.admin, roomSettings.category, roomSettings.difficulty)
 });
