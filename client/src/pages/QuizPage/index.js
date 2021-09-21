@@ -46,9 +46,11 @@ const QuizPage = () => {
     startSimulateClock();
   }, [])
 
-  const submitAnswer = () => {
+  const submitAnswer = (e) => {
     // stub
     console.log('submitted answer')
+    
+    socket.emit("answer", e)
     // Instead always 10s e.g. 'lock in answer'
     // setIsUserTurn(prev => !prev);
     // setCount(10);
@@ -67,8 +69,11 @@ const QuizPage = () => {
   })
 
   socket.on('question', (question)=>{
-    console.log(question)
     setQuestion(question)
+  })
+
+  socket.on("options", (options)=>{
+    setOptions(options)
   })
 
   const exitHandler = () => {

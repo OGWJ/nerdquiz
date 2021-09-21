@@ -6,6 +6,7 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
   cors: { origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }
 });
+const he = require('he');
 
 let settings;
 
@@ -60,19 +61,29 @@ io.on("connection", (socket) => {
         let numClients = io.sockets.adapter.rooms.get(settings.admin).size
           
           //iterate over questions, making sure each client gets asked ten questions
-        for(let currentQuestion = 0; currentQuestion < (numClients*10);currentQuestion++)
+        for(let currentQuestion = 0; currentQuestion < (numClients*10); currentQuestion++)
         {
-          let question = (JSON.stringify(allQuestions.questions[currentQuestion], JSON.stringify(allQuestions.answers[currentQuestion])))
-             console.log(question)
-            socket.emit("question", question) 
+          //decode from HTML special characters, remove the quotes, add q & a's to same array
+          let question = he.decode(JSON.stringify(allQuestions.questions[currentQuestion]).slice(1,-1))
+          let options = allQuestions.answers[currentQuestion]
+          
+          
+          //send questions
+            socket.emit("question", (question)) 
+            socket.emit("options", options) 
             socket.on("answer", (answer)=>
              {
                //if it is equal to the correct answer
                if(answer === correct_answer[currentQuestion])
                {
+                 console.log("correct answer!!!")
+                 loopControl++
                  // add one to the score of that user (or however many points)
+               }else {
+                 console.log("WRONG")
                }
-               //currentQuestion++  
+
+ 
             })
           }
         }
