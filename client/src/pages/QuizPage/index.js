@@ -7,16 +7,21 @@ import './style.css'
 
 const QuizPage = () => {
 
+  const game = useContext(GameContext);
   const [isUserTurn, setIsUserTurn] = useState(false);
   const [question, setQuestion] = useState('');
-  const game = useContext(GameContext);
+  const [count, setCount] = useState(null);
 
   // add logic to listen for change of user turn
   socket.on('answer question', (quizInfo) => {
     const name = localStorage.getItem('username');
     setQuestion(quizInfo.question);
     setIsUserTurn(quizInfo.username === name ? true : false);
+  })
 
+  // add socket to update clock
+  socket.on('countdown', secondsRemaining => {
+    setCount(secondsRemaining);
   })
 
   const exitHandler = () => {
@@ -25,12 +30,14 @@ const QuizPage = () => {
     game.setState(GameStateTypes.QUIZ_FINISHED);
   }
 
+
   return (
 
     <div className='container p-nav'>
       <button onClick={exitHandler}>Exit Quiz</button>
       <div className='container d-flex text-center'>
         <h3>Question is: {question}</h3>
+        <h4>secondsRemaining</h4>
         {isUserTurn ?
           <div>
             {quizInfo.options.map(option => {
