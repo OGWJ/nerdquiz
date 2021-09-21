@@ -9,5 +9,6 @@ export const userExitsRoomHandler = () => {
 }
 
 export const userStartsQuizHandler = (roomId) => {
+    console.log("userStartsQuizHandler is called")
     socket.emit('user start quiz', roomId);
 }
