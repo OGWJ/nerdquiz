@@ -14,8 +14,10 @@ server.listen(port, () => {
 });
 
 io.on("connection", (socket) => {
-  
+  console.log(`User ${socket.id} connected`)
+
   socket.on("create room", (roomSettings) => {
+    console.log(`User ${socket.id} created a new room`)
     socket.join(roomSettings.admin);
     io.emit("create room", roomSettings); 
 
@@ -61,8 +63,14 @@ const selectQuestions = (allQuestions, correct_answer) =>{
 
 
   socket.on("user enter room", (roomSettings) => {
+    console.log(`User ${socket.id} clicked entered room`);
     socket.join(roomSettings.admin);
     io.to(roomSettings.admin).emit("user enter room");
+  });
+
+  socket.on("user start quiz", (roomSettings)=>{
+    console.log(`User ${socket.id} clicked start quiz`);
+    io.to(roomSettings.admin).emit("user start quiz");
   });
 
   socket.on("user answer", (username, question, answer) => {
