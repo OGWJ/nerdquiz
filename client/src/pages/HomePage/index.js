@@ -59,22 +59,21 @@ const HomePage = () => {
 
   return (
     <Container className='mt-4 p-nav text-center'>
-      <h3 className='m-4'>Welcome {localStorage.getItem('username')}</h3>
+      <h3 className='mt-3'>Welcome {localStorage.getItem('username')}</h3>
       <div className='container d-flex justify-content-center'>
         <button className='btn btn-secondary' onClick={handleCreateRoom}>Create a Room</button>
       </div>
-      <ul className='container'>
-        <h3 className='mt-4'>Join a Room</h3>
-
+      <ul className='container vw-100 row justify-content-center align-content-center'>
+        <h3 className='mt-3'>Join a Room</h3>
         {rooms.map(room => {
-          return (<li className='card text-center my-3 p-3' style={{
+          return (<li className='card text-center mb-3 p-3' style={{
             backgroundColor: getCardColors('EASY').bg,
             color: getCardColors('EASY').fg
-          }}>
+          }} onClick={() => userEntersRoomHandler(room.admin)}>
             <h3>{room.admin}'s Room</h3>
             <span>{room.category}</span>
             <span>{room.difficulty}</span>
-            <button onClick={(e) => userEntersRoomHandler(room.admin)}>Join</button>
+            {/* <button onClick={(e) => userEntersRoomHandler(room.admin)}>Join</button> */}
           </li>
           )
         })}

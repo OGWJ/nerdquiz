@@ -12,7 +12,7 @@ import {
 } from "./pages";
 
 import './style.css';
-import './fonts.css';
+import './colors.css';
 import { GameContext, GameStateTypes } from './models/GameStateTypes';
 
 function App() {

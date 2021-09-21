@@ -1,0 +1,25 @@
+:root {
+    /* TODO */
+    --nq-cream: #f2eece;
+    --nq-black: #000000;
+    --nq-green: #ffffff;
+    --nq-blue: #ffffff;
+    --nq-purple: #ffffff;
+    --nq-red: #ffffff;
+    --nq-orange: #ffffff;
+    --nq-yellow: #ffffff;
+}
+
+main {
+    min-height: 100%;
+    background-color: var(--nq-cream);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--nq-black);
+}
+
+a, p, span {
+    color: var(--nq-black);
+}
+

@@ -2,11 +2,20 @@
     padding-top: 22px;
 }
 
-.card {
+.btn, .card {
     transition: 0.3s ease-in-out;
 }
 
-.card:hover {
-    transform: translate(-5px, -5px);
-    box-shadow: 4px 8px #ea323d;
+.btn:hover, .card:hover {
+
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 5px #ea323d;
+    cursor: pointer;
+}
+
+.btn {
+    width: 300px;
+}
+.card {
+    max-width: 400px;
 }

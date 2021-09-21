@@ -61,28 +61,26 @@ const WaitingRoomPage = () => {
   }
 
   return (
-    <Container className='p-nav d-flex justify-content-center'>
-      <Container className='row vw-100'>
-        <Container className='col-md'>
-          <h3 className='pt-4'>{game.roomAdmin}'s Room</h3>
-          <h5 className=''><small>Category is</small> <em>Video Games</em></h5>
-          <h5 className=''><small>Difficulty is</small> <em>Hard!</em></h5>
-          <Container className='d-flex justify-content-center'>
-            {isUsersRoom ? <button onClick={handleStuff} className='btn btn-success m-3'>Start Quiz</button> : null}
-            <button onClick={handleExitRoom} className='btn btn-danger m-3'>Exit room</button>
-          </Container>
+    <Container className='row vw-100 p-nav d-flex justify-content-center'>
+      <Container className='col-sm'>
+        <h3 className='pt-4'>{game.roomAdmin}'s Room</h3>
+        <h5 className=''><small>Category is</small> <em>Video Games</em></h5>
+        <h5 className=''><small>Difficulty is</small> <em>Hard!</em></h5>
+        <Container className='d-flex justify-content-center'>
+          {isUsersRoom ? <button onClick={handleStuff} className='btn btn-success m-3'>Start Quiz</button> : null}
+          <button onClick={handleExitRoom} className='btn btn-danger m-3'>Exit room</button>
         </Container>
-        <Container className='col-sm'>
-          <ul>
-            <h3 className='pt-4'>Who's Playin'?</h3>
-            {
-              players.map(player => {
-                return (<li className='card user-card text-center d-flex flex-column justify-content-center my-3'
-                  style={{ backgroundColor: '#4e4d83', color: '#ffffff' }}>{player}</li>);
-              })
-            }
-          </ul>
-        </Container>
+      </Container>
+      <Container className='col-sm'>
+        <ul>
+          <h3 className='pt-4'>Who's Playin'?</h3>
+          {
+            players.map(player => {
+              return (<li className='card user-card text-center d-flex flex-column justify-content-center my-3'
+                style={{ backgroundColor: '#4e4d83', color: '#ffffff' }}>{player}</li>);
+            })
+          }
+        </ul>
       </Container>
     </Container >
   );
