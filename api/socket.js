@@ -21,21 +21,44 @@ io.on("connection", (socket) => {
 
     //use room settings to request from the trivia API with user input
     async function getQuestions(admin, cat, diff) {
-      const url = `https://opentdb.com/api.php?amount=10&category=${cat}&difficulty=${diff.toLowerCase()}`;
-      const { data } = await axios.get(url);
+      const url = `https://opentdb.com/api.php?amount=50&category=${cat}&difficulty=${diff.toLowerCase()}`;
+      let { data } = await axios.get(url);
       
       //set q&a's
       let questions = data.results.map(q => q.question)
       let answers = data.results.map(a => [a.correct_answer, ...a.incorrect_answers])
       let correct_answer = data.results.map(a => a.correct_answer)
-      selectQuestions(GameConfig.create(admin, questions, answers))
-      //emit Q&A to the front end
-      //io.emit("questions", (GameConfig.create(admin, questions, answers))) 
-      // send questions and answers to function that will send them to users seperately
-
-  }
+      
+      //send to function to take it turns and emit questions to the front end as accordingly
+      selectQuestions(GameConfig.create(admin, questions, answers), correct_answer)
+      }
   getQuestions(roomSettings.admin, roomSettings.category, roomSettings.difficulty)
+  let clients = ["one", "two", "three"];
+
+const selectQuestions = (allQuestions, correct_answer) =>{
+
+    // get length of client
+    let numClients = clients.length
+    
+    //iterate over questions, making sure each client gets asked ten questions
+    for(let currentQuestion = 0; currentQuestion < (numClients*10);currentQuestion++)
+    {
+       let question = (JSON.stringify(allQuestions.questions[currentQuestion], JSON.stringify(allQuestions.answers[currentQuestion])))
+       
+       //socket.emit("question", question) ---- uncommented once listeners are added
+       //socket.on("answer", (answer)=>
+      //  {
+      //    //if it is equal to the correct answer
+      //    if(answer === correct_answer[currentQuestion])
+      //    {
+      //      // add one to the score of that user (or however many points)
+      //    }
+      //    //currentQuestion++  
+      // })
+    }
+  }
 });
+
 
   socket.on("user enter room", (roomSettings) => {
     socket.join(roomSettings.admin);
@@ -56,3 +79,5 @@ io.on("connection", (socket) => {
     console.log(`user disconnected`);
   });
 });
+
+
