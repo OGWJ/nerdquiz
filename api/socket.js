@@ -1,12 +1,8 @@
 const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
-  cors: { origin: "*", methods: ["GET", "POST"] }
-}); // integrate our http server with a new instance of socket.io
-
-// socket connection will go here
-
-app.use(express.static(path.join(__dirname, "client")));
+  cors: { origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }
+});
 
 const port = process.env.PORT || 5001;
 
@@ -14,65 +10,30 @@ server.listen(port, () => {
   console.log(`Open for play on port ${port}!`);
 });
 
-// Handle a socket connection request from web client
-const connections = [null, null];
-
 io.on("connection", (socket) => {
-  console.log("'Ello, who's this we got here?"); // runs when client first connects
+  socket.on("create room", (roomId, roomSettings) => {
+    socket.join(roomId);
+    console.log("created room", roomId);
+    io.emit("create room", roomSettings);
+  });
 
-  // Find an available player number
-  let playerIndex = -1;
-  for (const i in connections) {
-    if (connections[i] === null) {
-      playerIndex = i;
-      break;
-    }
-  }
+  socket.on("user enter room", (roomId) => {
+    socket.join(roomId);
+    console.log("Number of players:", playerCount);
+    io.emit("user enter room", roomId);
+  });
 
-  // Tell the connecting client what player number they are
-  socket.emit("player-number", playerIndex);
+  socket.on("user answer", (username, question, answer) => {
+    io.emit("user answer", username, question, answer);
+    console.log(`${username} answered ${question}`);
+  });
 
-  console.log(`Player ${playerIndex} has connected`);
+  socket.on("quiz ended", (roomId) => {
+    io.emit("quiz ended", roomId);
+  });
 
-  // Ignore player 3
-  if (playerIndex === -1) return;
-
-  connections[playerIndex] = false;
-
-  // Tell eveyone what player number just connected
-  socket.broadcast.emit("player-connection", playerIndex);
-
-  // Handle Diconnect
   socket.on("disconnect", () => {
-    console.log(`Player ${playerIndex} disconnected`);
-    connections[playerIndex] = null;
-    //Tell everyone what player numbe just disconnected
-    socket.broadcast.emit("player-connection", playerIndex);
-  });
-
-  // On Ready
-  socket.on("player-ready", () => {
-    socket.broadcast.emit("enemy-ready", playerIndex);
-    connections[playerIndex] = true;
-  });
-
-  // Check player connections
-  socket.on("check-players", () => {
-    const players = [];
-    for (const i in connections) {
-      connections[i] === null
-        ? players.push({ connected: false, ready: false })
-        : players.push({ connected: true, ready: connections[i] });
-    }
-    socket.emit("check-players", players);
-
-    // Timeout connection
-    setTimeout(() => {
-      connections[playerIndex] = null;
-      socket.emit("timeout");
-      socket.disconnect();
-    }, 600000); // 10 minute limit per player
+    io.emit("user exit room");
+    console.log(`${username} disconnected`);
   });
 });
-
-module.exports = { io };
