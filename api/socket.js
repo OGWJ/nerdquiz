@@ -1,5 +1,4 @@
 const axios = require('axios');
-
 const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
@@ -13,19 +12,26 @@ server.listen(port, () => {
 });
 
 io.on("connection", (socket) => {
+  
   socket.on("create room", (roomSettings) => {
     socket.join(roomSettings.admin);
     io.emit("create room", roomSettings); 
+
+    //use room settings to request from the trivia API with user input
     async function getQuestions(cat, diff) {
-    const url = `https://opentdb.com/api.php?amount=50&category=${cat}&difficulty=${diff.toLowerCase()}&type=multiple`;
-    console.log(url)
+    const url = `https://opentdb.com/api.php?amount=10&category=${cat}&difficulty=${diff.toLowerCase()}`;
     const { data } = await axios.get(url);
-    console.log(data.results)
-    //return data.results;
+  
+    let questions = data.results.map(q => ({questions :q.question}))
+    let answers = data.results.map(a => ({answers: [a.correct_answer, ...a.incorrect_answers]}))
+    let correct_answer = data.results.map(a => ({correct_answer: a.correct_answer}))
+    
+    //emit Q&A to the front end?
+    io.emit("questions", questions)
+    io.emit("answers", answers)  
   }
   getQuestions(roomSettings.category, roomSettings.difficulty)
-
-  });
+});
 
   socket.on("user enter room", (roomSettings) => {
     socket.join(roomSettings.admin);
