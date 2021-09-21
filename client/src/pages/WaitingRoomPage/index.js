@@ -1,13 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { socket } from "../../service/socket";
 import { userStartsQuizHandler } from "../../handlers/userRoomInteractionHandlers";
 import './style.css';
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 
+
+const getPlayersInRoom = async () => {
+  // return await fetch()
+  return ['Bob', 'Sal', 'Phil'];
+}
+
 const WaitingRoomPage = () => {
 
   const game = useContext(GameContext);
-  const [players, setPlayers] = useState(['jessica', 'bill']);
+  const [players, setPlayers] = useState(['']);
+  useEffect(async () => {
+    // temp
+    // will be roomId = game.roomId;
+    const roomId = 0;
+    // const otherPlayers = await getPlayersInRoom(roomId)
+    // setPlayers(otherPlayers + localStorage.getItem('username'));
+    setPlayers(["fred", "phil"])
+  }, [])
 
   // Listen for others entering room to update the state
   socket.on('user enter room', eventInfo => {
@@ -41,9 +55,15 @@ const WaitingRoomPage = () => {
     game.setState(GameStateTypes.QUIZ);
   }
 
+  const handleExitRoom = () => {
+    // emit user exited room, then
+    game.setState(GameStateTypes.HOME);
+  }
+
   return (
     <div className='p-nav'>
-      <h3 className='pt-4 px-4'>Hostmame's Room</h3>
+      <button onClick={handleExitRoom}>Exit room</button>
+      <h3 className='pt-4 px-4'>{game.roomAdmin}'s Room</h3>
       <h5 className='px-4'><small>Category is</small> <em>Video Games</em></h5>
       <h5 className='px-4'><small>Difficulty is</small> <em>Hard!</em></h5>
       <ul>

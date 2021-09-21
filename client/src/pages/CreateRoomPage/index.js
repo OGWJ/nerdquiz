@@ -30,8 +30,15 @@ const CreateRoomPage = () => {
     game.setState(GameStateTypes.WAITING_ROOM);
   }
 
+  const goBack = () => {
+    game.setState(GameStateTypes.HOME);
+  }
+
   return (
     <div className="p-nav w-100 d-flex justify-content-center">
+      <button onClick={goBack} className="btn btn-warning">
+        Cancel
+      </button>
       <form name="create-room-form" onSubmit={createRoomHandlerWrapper}>
         <select id="category-select" className="form-select my-4 text-center">
           <option value="15">Video Games</option>
