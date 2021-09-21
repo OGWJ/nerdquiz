@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { socket } from "../../service/socket";
+import { userEntersRoomHandler } from '../../handlers/userRoomInteractionHandlers';
+import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 
 import './style.css'
 
 const HomePage = () => {
+
+  const game = useContext(GameContext);
 
   // Need to get all available rooms
 
@@ -15,6 +19,21 @@ const HomePage = () => {
 
   socket.on('create room', newRoom => {
     setRooms(prev => prev + newRoom);
+  })
+
+  const joinRoom = roomAdmin => {
+    console.log('joined room')
+    socket.emit('joined room', {
+      username: localStorage.getItem('username'),
+      roomAdmin: roomAdmin
+    })
+
+    // NOTE: Line below for temporary for development without socket
+    game.setState(GameStateTypes.WAITING_ROOM)
+  }
+
+  socket.on('user enter room', () => {
+    game.setState(GameStateTypes.WAITING_ROOM)
   })
 
   const getCardColors = difficulty => {
@@ -29,9 +48,6 @@ const HomePage = () => {
     }
   }
 
-  const joinRoom = () => {
-    console.log('joined room')
-  }
 
   return (
     <div className='container mt-4 p-nav'>
@@ -50,7 +66,7 @@ const HomePage = () => {
             <h3>{room.admin}'s Room</h3>
             <span>{room.category}</span>
             <span>{room.difficulty}</span>
-            <button onClick={joinRoom(room.admin)}>Join</button>
+            <button onClick={(e) => userEntersRoomHandler(room.admin)}>Join</button>
           </li>
           )
         })}
