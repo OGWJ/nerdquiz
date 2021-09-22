@@ -15,7 +15,7 @@ import './style.css';
 import { GameContext, GameStateTypes } from './models/GameStateTypes';
 
 function App() {
-
+  const [gameSettings, setGameSettings] = useState({})
   const [gameState, setGameState] = useState(GameStateTypes.LANDING);
 
   return (
@@ -27,7 +27,7 @@ function App() {
         <Switch>
 
           <Route exact path="/">
-            <GameContext.Provider value={{ getState: gameState, setState: setGameState }}>
+            <GameContext.Provider value={{ getState: gameState, setState: setGameState, gameSettings, setGameSettings }}>
               <GamePage />
             </GameContext.Provider>
           </Route>
