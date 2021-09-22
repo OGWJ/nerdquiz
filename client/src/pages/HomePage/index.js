@@ -19,8 +19,11 @@ const HomePage = () => {
   }, [])
 
   // Update rooms when they are created in real-time
-  socket.on('create room', newRoom => {
-    setRooms(prev => prev + newRoom);
+  socket.on('room created', newRoom => {
+    console.log(newRoom.admin)
+    setRooms(rooms.push({admin: newRoom.admin, category: newRoom.category, difficulty: newRoom.difficulty}));
+    console.log("new room")
+    console.log(rooms)
   })
 
   const joinRoom = roomAdmin => {

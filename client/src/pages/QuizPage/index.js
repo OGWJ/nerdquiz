@@ -55,9 +55,12 @@ const QuizPage = () => {
 
   const submitAnswer = (e) => {
     // stub
-    console.log(e)
-    
     socket.emit("answer", e)
+    console.log(e)
+    setIsUserTurn(prev => !prev)
+    setCount(10);
+    localCount = 10;
+  
     
     // Instead always 10s e.g. 'lock in answer'
     // setIsUserTurn(prev => !prev);

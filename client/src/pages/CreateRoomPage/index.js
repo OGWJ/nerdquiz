@@ -27,6 +27,7 @@ const CreateRoomPage = () => {
 
   const createRoomHandlerWrapper = (e) => {
     createRoomHandler(e);
+    
     game.setState(GameStateTypes.WAITING_ROOM);
   }
 

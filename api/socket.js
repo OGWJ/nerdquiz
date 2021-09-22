@@ -22,20 +22,21 @@ io.on("connection", (socket) => {
   socket.on("create room", (roomSettings) => {
     console.log(`User ${socket.id} created a new room`)
     socket.join(roomSettings.admin);
-    io.emit("create room", roomSettings); 
+    socket.emit("room created", roomSettings); 
     settings = roomSettings
   });
-
+  
 
   socket.on("user enter room", (roomSettings) => {
     console.log(`User ${socket.id} clicked entered room`);
+  
     socket.join(roomSettings.admin);
     io.to(roomSettings.admin).emit("user enter room");
   });
 
   socket.on("user start quiz", (roomId)=>{
     console.log(`User ${socket.id} clicked start quiz`);
-    console.log(settings)
+ 
     io.to(roomId).emit("user start quiz");
 
       //use room settings to request from the trivia API with user input
@@ -56,12 +57,12 @@ io.on("connection", (socket) => {
       getQuestions(settings.admin, settings.category, settings.difficulty)
 
       const selectQuestions = (allQuestions, correct_answer) =>{
-
         // get length of client
         let numClients = io.sockets.adapter.rooms.get(settings.admin).size
         console.log("clients " + numClients)
         let currentQuestion = 0;
-          
+        
+        
         const sendQuestion = () =>{   
           
           //check if all clients have answered ten questions
@@ -74,7 +75,6 @@ io.on("connection", (socket) => {
             //send questions & answers
               socket.emit("question", (question)) 
               socket.emit("options", options) 
-              
              }
             }
 
@@ -96,10 +96,7 @@ io.on("connection", (socket) => {
                   sendQuestion()
                   console.log("wrong");
                }
-               
              })
-              
-
         }
   });
 
@@ -116,19 +113,9 @@ io.on("connection", (socket) => {
     io.emit("user exit room");
     console.log(`user disconnected`);
   });
+
+
+  
 });
 
 
-
-// let questionNum = 0
-// let count = 0
-// if(count === 0){
-//   count = 1
-//   emit question[question num]
-
-//   wait for the answer 
-//     check answer
-//     reset listener 
-//   received you questionNum++
-//   count = 0
-// }
