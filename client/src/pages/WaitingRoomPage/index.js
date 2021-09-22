@@ -3,6 +3,7 @@ import { socket } from "../../service/socket";
 import { userStartsQuizHandler } from "../../handlers/userRoomInteractionHandlers";
 import './style.css';
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
+import { userExitsRoomHandler } from "../../handlers/userRoomInteractionHandlers";
 
 
 const getPlayersInRoom = async () => {
@@ -14,19 +15,22 @@ const WaitingRoomPage = () => {
 
   const game = useContext(GameContext);
   const [players, setPlayers] = useState(['']);
-  useEffect(async () => {
-    // temp
-    // will be roomId = game.roomId;
-    const roomId = 0;
-    // const otherPlayers = await getPlayersInRoom(roomId)
-    // setPlayers(otherPlayers + localStorage.getItem('username'));
-    setPlayers(["fred", "phil"])
-  }, [])
+  // useEffect(async () => {
+  //   // temp
+  //   // will be roomId = game.roomId;
+  //   const roomId = 0;
+  //   // const otherPlayers = await getPlayersInRoom(roomId)
+  //   // setPlayers(otherPlayers + localStorage.getItem('username'));
+  //   setPlayers(["fred", "phil"])
+  // }, [])
 
   useEffect(async () => {
     // Listen for others entering room to update the state
     socket.on('user enter room', eventInfo => {
-      setPlayers(prev => prev + eventInfo.player);
+      console.log("entering room")
+      console.log(eventInfo)
+      setPlayers(prev => prev + eventInfo.username);
+      
     })
   }, [])
 
@@ -34,6 +38,10 @@ const WaitingRoomPage = () => {
     // Listen for other leaving room to update the state
     socket.on('user exits room', eventInfo => {
       setPlayers(prev => prev.filter(player => player != eventInfo.username));
+    })
+
+    socket.on('user started quiz', () => {
+      game.setState(GameStateTypes.QUIZ);
     })
   }, [])
 
@@ -50,6 +58,7 @@ const WaitingRoomPage = () => {
 
   const handleExitRoom = () => {
     // emit user exited room, then
+    userExitsRoomHandler(game.gameSettings.admin)
     game.setState(GameStateTypes.HOME);
   }
 
