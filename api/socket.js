@@ -59,43 +59,54 @@ io.on("connection", (socket) => {
 
         // get length of client
         let numClients = io.sockets.adapter.rooms.get(settings.admin).size
+        console.log("clients " + numClients)
+        let currentQuestion = 0;
           
-          //iterate over questions, making sure each client gets asked ten questions
-        for(let currentQuestion = 0; currentQuestion < (numClients*10); currentQuestion++)
-        {
-          setTimeout( function setQuestions(){
+        const sendQuestion = () =>{   
+          
+          //check if all clients have answered ten questions
+            if(currentQuestion <= (numClients*10)){
+
           //decode from HTML special characters, remove the quotation marks, 
             let question = he.decode(JSON.stringify(allQuestions.questions[currentQuestion]).slice(1,-1))
             let options = allQuestions.answers[currentQuestion]
-            console.log(question)
             
-            //send questions
+            //send questions & answers
               socket.emit("question", (question)) 
               socket.emit("options", options) 
-              socket.on("answer", (answer)=>
-              {
-                //if it is equal to the correct answer
-                if(answer === correct_answer[currentQuestion])
-                {
-                  console.log(answer + " " + correct_answer[currentQuestion])
-                  console.log("correct answer!!!")
               
-                  // add one to the score of that user (or however many points)
-                }else {
-                  console.log(answer + correct_answer[currentQuestion])
-                  console.log("WRONG")
-                }
-              })
-            }, currentQuestion * 10000)
-          
-          }
+             }
+            }
+
+            //send the first question
+            sendQuestion()
+
+            //listen for answers, move to the next question, call sendQuestion again
+             socket.on("answer", (e)=>
+             {
+               console.log(e)
+               //if it is equal to the correct answer
+               if(e === correct_answer[currentQuestion])
+               {
+                 currentQuestion++ 
+                  sendQuestion()
+                console.log("correct")
+               }else {
+                 currentQuestion++ 
+                 sendQuestion()
+                 console.log("wrong");
+               }
+               
+             })
+              
+
         }
   });
 
-  socket.on("user answer", (username, question, answer) => {
-    io.to(roomSettings.admin)("user answer", username, question);
-    console.log(`user answered question`);
-  });
+  //socket.on("user answer", (username, question, answer) => {
+  //   io.to(roomSettings.admin)("user answer", username, question);
+  //   console.log(`user answered question`);
+  // });
 
   socket.on("quiz ended", (roomId) => {
     io.emit("quiz ended", roomId);
@@ -108,3 +119,16 @@ io.on("connection", (socket) => {
 });
 
 
+
+// let questionNum = 0
+// let count = 0
+// if(count === 0){
+//   count = 1
+//   emit question[question num]
+
+//   wait for the answer 
+//     check answer
+//     reset listener 
+//   received you questionNum++
+//   count = 0
+// }

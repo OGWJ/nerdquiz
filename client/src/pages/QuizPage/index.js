@@ -48,9 +48,10 @@ const QuizPage = () => {
 
   const submitAnswer = (e) => {
     // stub
-    console.log('submitted answer')
+    console.log(e)
     
     socket.emit("answer", e)
+    
     // Instead always 10s e.g. 'lock in answer'
     // setIsUserTurn(prev => !prev);
     // setCount(10);
