@@ -1,7 +1,7 @@
 import { screen, render } from "@testing-library/react"
 import CreateRoomButton from "."
 
-describe('Create Room Button', () => {
+describe('CreateRoomButton', () => {
 
     beforeAll(() => {
         render(<CreateRoomButton />)

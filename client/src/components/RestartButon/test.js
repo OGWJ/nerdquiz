@@ -1,12 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import RestartButton from ".";
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
-// <GameContext value={GameStateTypes.QUIZ_FINISHED}>
-// </GameContext>
-import { act } from 'react-dom/test-utils';
-import ReactDOM from 'react-dom';
+import { GameContext } from "../../models/GameStateTypes";
 
 describe('RestartButton', () => {
 

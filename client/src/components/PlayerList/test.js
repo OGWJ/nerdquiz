@@ -1,7 +1,7 @@
 import { screen, render } from "@testing-library/react"
 import PlayerList from "."
 
-describe('Create Room Button', () => {
+describe('PlayerList', () => {
 
     beforeAll(() => {
         let players = [];
