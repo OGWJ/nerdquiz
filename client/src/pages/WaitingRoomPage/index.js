@@ -3,6 +3,7 @@ import { socket } from "../../service/socket";
 import { userStartsQuizHandler } from "../../handlers/userRoomInteractionHandlers";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import './style.css';
+import { PlayerList } from "../../components";
 
 const getPlayersInRoom = async () => {
   // return await fetch()
@@ -71,15 +72,7 @@ const WaitingRoomPage = () => {
         </div>
       </div>
       <div className='col-sm'>
-        <ul>
-          <h3 className='pt-4'>Who's Playin'?</h3>
-          {
-            players.map(player => {
-              return (<li className='card user-card text-center d-flex flex-column justify-content-center my-3'
-                style={{ backgroundColor: '#4e4d83', color: '#ffffff' }}>{player}</li>);
-            })
-          }
-        </ul>
+        <PlayerList players={players} />
       </div>
     </div>
   );

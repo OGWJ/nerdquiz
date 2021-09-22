@@ -14,11 +14,12 @@ const getCardColors = difficulty => {
 }
 
 const RoomList = ({ rooms }) => {
+    let count = 0;
     return (
         <ul className='container vw-100 row justify-content-center align-content-center'>
-            <h3 className='mt-3'>Join a Room</h3>
-            {rooms.map(room => {
-                return (<li className='card text-center mb-3 p-3' style={{
+            <h3 key={0} className='mt-3'>Join a Room</h3>
+            {rooms && rooms.map(room => {
+                return (<li key={++count} className='card text-center mb-3 p-3' style={{
                     backgroundColor: getCardColors('EASY').bg,
                     color: getCardColors('EASY').fg
                 }} onClick={() => userEntersRoomHandler(room.admin)}>
