@@ -23,15 +23,17 @@ const WaitingRoomPage = () => {
     setPlayers(["fred", "phil"])
   }, [])
 
+  useEffect(async () => {
   // Listen for others entering room to update the state
   socket.on('user enter room', eventInfo => {
     setPlayers(prev => prev + eventInfo.player);
-  })
+  })}, [])
 
+  useEffect(async () => {
   // Listen for other leaving room to update the state
   socket.on('user exits room', eventInfo => {
     setPlayers(prev => prev.filter(player => player != eventInfo.player));
-  })
+  })}, [])
 
   // TODO create color generation stuff
 

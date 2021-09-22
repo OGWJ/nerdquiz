@@ -45,6 +45,7 @@ const QuizPage = () => {
       }
 
     }, 1000);
+    
     socket.on("quiz ended", (roomId)=>{
       clearInterval(clock)
       clock = 0;
@@ -72,25 +73,29 @@ const QuizPage = () => {
     // setCount(10);
   }
 
+  useEffect(async () => {
   // add logic to listen for change of user turn
   socket.on('answer question', (quizInfo) => {
     const name = localStorage.getItem('username');
     setQuestion(quizInfo.question);
     setIsUserTurn(quizInfo.username === name ? true : false);
-  })
+  })}, [])
 
+  useEffect(async () => {
   // add socket to update clock
   socket.on('countdown', secondsRemaining => {
     setCount(secondsRemaining);
-  })
+  })}, [])
 
+  useEffect(async () => {
   socket.on('question', (question)=>{
     setQuestion(question)
-  })
+  })}, [])
 
+  useEffect(async () => {
   socket.on("options", (options)=>{
     setOptions(options)
-  })
+  })}, [])
 
 
 
