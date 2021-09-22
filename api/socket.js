@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { GameConfig } = require('./models/gameConfig');
-const {selectQuestions} = require('./controllers/helpers/index')
+
 const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
@@ -32,6 +32,9 @@ io.on("connection", (socket) => {
   
     socket.join(roomSettings.admin);
     io.to(roomSettings.admin).emit("user enter room");
+    GameConfig.gameData.joinUser(roomSettings.admin, roomSettings.username)
+    let users = GameConfig.gameData.getAllUsers(roomSettings.admin)
+    console.log(users)
   });
 
   socket.on("user start quiz", (roomId)=>{
@@ -57,7 +60,7 @@ io.on("connection", (socket) => {
             console.log("no questions found") 
           }}
 
-          console.log(retVal)
+          
         //set q&a's
         let questions = retVal.results.map(q => q.question)
         let answers = retVal.results.map(a => [a.correct_answer, ...a.incorrect_answers])
@@ -73,6 +76,7 @@ io.on("connection", (socket) => {
       const selectQuestions = (allQuestions, correct_answer) =>{
         // get length of client
         let numClients = io.sockets.adapter.rooms.get(settings.admin).size
+
         console.log("clients " + numClients)
         
         
@@ -81,7 +85,7 @@ io.on("connection", (socket) => {
         const sendQuestion = () =>{   
           
           //check if all clients have answered ten questions
-            if(currentQuestion <= (numClients*10)){
+            if(currentQuestion <= ((numClients*10)+1)){
 
           //decode from HTML special characters, remove the quotation marks, 
             let question = he.decode(JSON.stringify(allQuestions.questions[currentQuestion]).slice(1,-1))

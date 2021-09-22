@@ -45,7 +45,11 @@ const QuizPage = () => {
       }
 
     }, 1000);
-    
+    socket.on("quiz ended", (roomId)=>{
+      clearInterval(clock)
+      clock = 0;
+      game.setState(GameStateTypes.QUIZ_FINISHED)
+    })
   }
 
   // should handle component unmount with useEffect cleanup
@@ -59,7 +63,7 @@ const QuizPage = () => {
     console.log(e)
     setIsUserTurn(prev => !prev)
     setCount(10);
-    localCount = 10;
+    
   
     
     // Instead always 10s e.g. 'lock in answer'

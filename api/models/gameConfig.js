@@ -1,5 +1,5 @@
 
-let gameData =[];
+
 
 class GameConfig {
   constructor(roomId, questions, answers) {
@@ -7,28 +7,35 @@ class GameConfig {
     // this.genre = data.genre;
     // this.difficulty = data.difficulty;
     // this.admin = data.admin;
-    // this.users = [
-    //   {
-    //     name: admin,
-    //     score: 0,
-    //     complete: false
-    //   }
-    // ];
+    this.users = [
+      {
+        name: this.roomId,
+        score: 0,
+        
+      }
+    ];
     this.questions = questions;
     this.answers = answers
     //this.startGame = false;
   }
+  static gameData = [];
 
   static create(id, q, a) {
     const newGame = new GameConfig(id,{...q},{...a});
-    gameData.push(newGame);
+    GameConfig.gameData.push(newGame);
     return newGame;
 }
 
-  // static get all(){
-  //   const gameData = gameData.map((game) => new GameConfig(game));
-  //   return gameData;
-  // }
+  static joinUser(roomId, username){
+    let currentGame = GameConfig.gameData.find(game => game.roomId === roomId)
+    if(currentGame){ currentGame.users.push({user: username, score: 0}) }
+  }
+
+  static getAllUsers(roomId){
+    let currentGame = GameConfig.gameData.find(game => game.roomId === roomId)
+    return currentGame.users
+  }
+
 }
 
 
