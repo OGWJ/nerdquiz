@@ -25,6 +25,13 @@ const QuizPage = () => {
       localCount--;
       console.log(localCount);
 
+      //if the timer is 0 it should move to the next question
+      if(localCount === 0){
+        let ans = 'null';
+        socket.emit("answer", ans)
+        console.log("end of time reached")
+      }
+
       // issue here with count and local value in interval loop
       // maybe clear interval at end, update value and recursively call
 

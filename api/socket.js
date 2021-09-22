@@ -88,13 +88,13 @@ io.on("connection", (socket) => {
                //if it is equal to the correct answer
                if(e === correct_answer[currentQuestion])
                {
-                 currentQuestion++ 
+                  currentQuestion++ 
                   sendQuestion()
-                console.log("correct")
+                  console.log("correct")
                }else {
-                 currentQuestion++ 
-                 sendQuestion()
-                 console.log("wrong");
+                  currentQuestion++ 
+                  sendQuestion()
+                  console.log("wrong");
                }
                
              })
