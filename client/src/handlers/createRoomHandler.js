@@ -10,14 +10,10 @@ export const createRoomHandler = (e) => {
     category: settings[0].value,
     difficulty: settings[1].value
   };
-  // const roomSettings = {
-  //   admin: "admin",
-  //   category: 15,
-  //   difficulty: "easy"
-  // };
+  
   
   socket.emit("create room", roomSettings);
-  
+  return roomSettings;
 
 
 };
