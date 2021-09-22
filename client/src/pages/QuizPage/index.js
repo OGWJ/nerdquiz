@@ -101,7 +101,8 @@ const QuizPage = () => {
 
   const exitHandler = () => {
     // stub
-    // call userExitsRoomHandler(), then
+     userExitsRoomHandler(game.gameSettings.admin), 
+     console.log("user exits handler called")
     game.setState(GameStateTypes.QUIZ_FINISHED);
    
   }
