@@ -22,15 +22,16 @@ io.on("connection", (socket) => {
 
   socket.on("get room list", () => {
     let allGames = GameConfig.gameData;
-    console.log(allGames);
     socket.emit("room list", allGames);
   });
 
   socket.on("create room", (roomSettings) => {
     console.log(`User ${socket.id} created a new room`);
-    GameConfig.create(roomSettings.admin);
-    let allGames = GameConfig.gameData;
-    console.log(allGames);
+    GameConfig.create(
+      roomSettings.admin,
+      roomSettings.category,
+      roomSettings.difficulty
+    );
     socket.join(roomSettings.admin);
     socket.emit("room created", roomSettings);
     settings = roomSettings;
@@ -42,7 +43,6 @@ io.on("connection", (socket) => {
     socket.join(roomSettings.roomId);
     io.to(roomSettings.roomId).emit("user enter room");
     GameConfig.joinUser(roomSettings.roomId, roomSettings.username);
-    console.log(roomSettings);
     let users = GameConfig.getAllUsers(roomSettings.roomId);
     console.log(users);
   });
