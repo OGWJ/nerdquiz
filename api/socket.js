@@ -75,18 +75,17 @@ io.on("connection", (socket) => {
             //send questions & answers
               socket.emit("question", (question)) 
               socket.emit("options", options) 
-             }
-            }
-
+             } else { socket.emit("quiz ended", roomId) }
             //send the first question
             sendQuestion()
-
+            }
             //listen for answers, move to the next question, call sendQuestion again
              socket.on("answer", (e)=>
              {
                console.log(e)
                //if it is equal to the correct answer
                if(e === correct_answer[currentQuestion])
+             
                {
                   currentQuestion++ 
                   sendQuestion()
@@ -105,9 +104,9 @@ io.on("connection", (socket) => {
   //   console.log(`user answered question`);
   // });
 
-  socket.on("quiz ended", (roomId) => {
-    io.emit("quiz ended", roomId);
-  });
+  // socket.on("quiz ended", (roomId) => {
+  //   io.emit("quiz ended", roomId);
+  // });
 
   socket.on("disconnect", () => {
     io.emit("user exit room");
