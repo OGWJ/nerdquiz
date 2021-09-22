@@ -63,32 +63,33 @@ io.on("connection", (socket) => {
           //iterate over questions, making sure each client gets asked ten questions
         for(let currentQuestion = 0; currentQuestion < (numClients*10); currentQuestion++)
         {
-          //decode from HTML special characters, remove the quotes, add q & a's to same array
-          let question = he.decode(JSON.stringify(allQuestions.questions[currentQuestion]).slice(1,-1))
-          let options = allQuestions.answers[currentQuestion]
+          setTimeout( function setQuestions(){
+          //decode from HTML special characters, remove the quotation marks, 
+            let question = he.decode(JSON.stringify(allQuestions.questions[currentQuestion]).slice(1,-1))
+            let options = allQuestions.answers[currentQuestion]
+            console.log(question)
+            
+            //send questions
+              socket.emit("question", (question)) 
+              socket.emit("options", options) 
+              socket.on("answer", (answer)=>
+              {
+                //if it is equal to the correct answer
+                if(answer === correct_answer[currentQuestion])
+                {
+                  console.log(answer + " " + correct_answer[currentQuestion])
+                  console.log("correct answer!!!")
+              
+                  // add one to the score of that user (or however many points)
+                }else {
+                  console.log(answer + correct_answer[currentQuestion])
+                  console.log("WRONG")
+                }
+              })
+            }, currentQuestion * 10000)
           
-          
-          //send questions
-            socket.emit("question", (question)) 
-            socket.emit("options", options) 
-            socket.on("answer", (answer)=>
-             {
-               //if it is equal to the correct answer
-               if(answer === correct_answer[currentQuestion])
-               {
-                 console.log("correct answer!!!")
-                 loopControl++
-                 // add one to the score of that user (or however many points)
-               }else {
-                 console.log("WRONG")
-               }
-
- 
-            })
           }
         }
-      
-
   });
 
   socket.on("user answer", (username, question, answer) => {
