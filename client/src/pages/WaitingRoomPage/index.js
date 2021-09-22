@@ -39,15 +39,10 @@ const WaitingRoomPage = () => {
 
   // TODO create color generation stuff
 
-  const isUsersRoom = () => game.username == game.admin ? true : false;
-
-  const getRoomAdmin = () => {
-    // stub
-    return 'jessica';
-  }
+  const isUsersRoom = () => localStorage.getItem("username") == game.gameSettings.admin ? true : false;
 
   const handleStuff = () => {
-    const roomId = getRoomAdmin();
+    const roomId = game.gameSettings.admin;
     userStartsQuizHandler(roomId);
     // temp below
     game.setState(GameStateTypes.QUIZ);
@@ -61,9 +56,9 @@ const WaitingRoomPage = () => {
   return (
     <div className='p-nav'>
       <button onClick={handleExitRoom}>Exit room</button>
-      <h3 className='pt-4 px-4'>{game.admin}'s Room</h3>
-      <h5 className='px-4'><small>Category is</small> <em>{game.category}</em></h5>
-      <h5 className='px-4'><small>Difficulty is</small> <em>{game.difficulty}</em></h5>
+      <h3 className='pt-4 px-4'>{game.gameSettings.admin}'s Room</h3>
+      <h5 className='px-4'><small>Category is</small> <em>{game.gameSettings.category}</em></h5>
+      <h5 className='px-4'><small>Difficulty is</small> <em>{game.gameSettings.difficulty}</em></h5>
       <ul>
         {
           players.map(player => {
