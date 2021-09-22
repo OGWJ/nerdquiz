@@ -67,13 +67,13 @@ io.on("connection", (socket) => {
         let correct_answer = retVal.results.map(a => a.correct_answer)
         
         //send to function to take it turns and emit questions to the front end as accordingly
-        selectQuestions(GameConfig.create(admin, questions, answers), correct_answer) 
+        selectQuestions( questions, answers, correct_answer) 
       }
 
       // call function above 
       getQuestions(settings.admin, settings.category, settings.difficulty)
 
-      const selectQuestions = (allQuestions, correct_answer) =>{
+      const selectQuestions = (allQuestions, allAnswers, correct_answer) =>{
         // get length of client
         let numClients = io.sockets.adapter.rooms.get(settings.admin).size
 
@@ -88,8 +88,8 @@ io.on("connection", (socket) => {
             if(currentQuestion <= ((numClients*10)+1)){
 
           //decode from HTML special characters, remove the quotation marks, 
-            let question = he.decode(JSON.stringify(allQuestions.questions[currentQuestion]).slice(1,-1))
-            let options = allQuestions.answers[currentQuestion]
+            let question = he.decode(JSON.stringify(allQuestions[currentQuestion]).slice(1,-1))
+            let options = allAnswers[currentQuestion]
            
             //send questions & answers
               socket.emit("question", (question)) 
