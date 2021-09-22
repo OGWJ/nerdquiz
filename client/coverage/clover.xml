@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1632309238892" clover="3.2.0">
-  <project timestamp="1632309238892" name="All files">
-    <metrics statements="111" coveredstatements="73" conditionals="9" coveredconditionals="4" methods="44" coveredmethods="17" elements="164" coveredelements="94" complexity="0" loc="111" ncloc="111" packages="14" files="15" classes="15"/>
+<coverage generated="1632329774175" clover="3.2.0">
+  <project timestamp="1632329774176" name="All files">
+    <metrics statements="116" coveredstatements="80" conditionals="11" coveredconditionals="6" methods="46" coveredmethods="20" elements="173" coveredelements="106" complexity="0" loc="116" ncloc="116" packages="17" files="18" classes="18"/>
     <package name="components">
       <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/index.js">
@@ -12,42 +12,81 @@
       <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
       <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/CreateRoomButton/index.js">
         <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
-        <line num="3" count="2" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
       </file>
     </package>
-    <package name="components.RestartButon">
-      <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
-      <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/RestartButon/index.js">
-        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
-        <line num="5" count="3" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
+    <package name="components.CreateRoomForm">
+      <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+      <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/CreateRoomForm/index.js">
+        <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
       </file>
     </package>
+    <package name="components.HomeButon">
+      <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+      <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/HomeButon/index.js">
+        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.LandingPageForm">
+      <metrics statements="8" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+      <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/LandingPageForm/index.js">
+        <metrics statements="8" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.PlayerList">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/PlayerList/index.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+      </file>
+    </package>
     <package name="components.RoomList">
-      <metrics statements="9" coveredstatements="6" conditionals="3" coveredconditionals="1" methods="4" coveredmethods="3"/>
+      <metrics statements="10" coveredstatements="7" conditionals="5" coveredconditionals="3" methods="4" coveredmethods="3"/>
       <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/components/RoomList/index.js">
-        <metrics statements="9" coveredstatements="6" conditionals="3" coveredconditionals="1" methods="4" coveredmethods="3"/>
-        <line num="4" count="2" type="stmt"/>
+        <metrics statements="10" coveredstatements="7" conditionals="5" coveredconditionals="3" methods="4" coveredmethods="3"/>
+        <line num="4" count="5" type="stmt"/>
         <line num="6" count="2" type="cond" truecount="1" falsecount="2"/>
         <line num="8" count="2" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
         <line num="17" count="3" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
       </file>
     </package>
     <package name="handlers">
       <metrics statements="11" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="createRoomHandler.js" path="/Users/Owen/Desktop/nerdquiz/client/src/handlers/createRoomHandler.js">
         <metrics statements="5" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="3" count="1" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
@@ -55,11 +94,11 @@
       </file>
       <file name="userRoomInteractionHandlers.js" path="/Users/Owen/Desktop/nerdquiz/client/src/handlers/userRoomInteractionHandlers.js">
         <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="3" count="3" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
-        <line num="7" count="3" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
-        <line num="11" count="3" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
       </file>
     </package>
@@ -79,25 +118,16 @@
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="GameStateTypes.js" path="/Users/Owen/Desktop/nerdquiz/client/src/models/GameStateTypes.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="3" count="6" type="stmt"/>
-        <line num="8" count="6" type="stmt"/>
+        <line num="3" count="8" type="stmt"/>
+        <line num="8" count="8" type="stmt"/>
       </file>
     </package>
     <package name="pages.CreateRoomPage">
-      <metrics statements="11" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/pages/CreateRoomPage/index.js">
-        <metrics statements="11" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
       </file>
     </package>
     <package name="pages.HomePage">
@@ -105,7 +135,7 @@
       <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/pages/HomePage/index.js">
         <metrics statements="15" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="2"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="11" count="3" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
         <line num="15" count="2" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
@@ -122,17 +152,11 @@
       </file>
     </package>
     <package name="pages.LandingPage">
-      <metrics statements="8" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/pages/LandingPage/index.js">
-        <metrics statements="8" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
       </file>
     </package>
     <package name="pages.LeaderboardPage">
@@ -163,41 +187,40 @@
       </file>
     </package>
     <package name="pages.WaitingRoomPage">
-      <metrics statements="24" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="13" coveredmethods="3"/>
+      <metrics statements="23" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="12" coveredmethods="2"/>
       <file name="index.js" path="/Users/Owen/Desktop/nerdquiz/client/src/pages/WaitingRoomPage/index.js">
-        <metrics statements="24" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="13" coveredmethods="3"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
+        <metrics statements="23" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="12" coveredmethods="2"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
         <line num="15" count="2" type="stmt"/>
         <line num="16" count="2" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="37" count="2" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="45" count="2" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="50" count="2" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
         <line num="52" count="0" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="57" count="2" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="62" count="2" type="stmt"/>
-        <line num="78" count="3" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="63" count="2" type="stmt"/>
       </file>
     </package>
     <package name="service">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="socket.js" path="/Users/Owen/Desktop/nerdquiz/client/src/service/socket.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="2" count="4" type="stmt"/>
-        <line num="3" count="4" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
       </file>
     </package>
   </project>

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-// import Button from 'react-bootstrap/Button';
 import { GameContext, GameStateTypes } from '../../models/GameStateTypes';
 
-const RestartButton = () => {
+const HomeButton = ({ text }) => {
 
     const game = useContext(GameContext);
 
@@ -14,9 +13,9 @@ const RestartButton = () => {
         <button
             onClick={handleClick}
             className='btn btn-success'>
-            Play Again?
+            {text}
         </button>
     )
 }
 
-export default RestartButton;
+export default HomeButton;

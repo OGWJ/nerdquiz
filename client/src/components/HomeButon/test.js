@@ -1,10 +1,10 @@
 import React from 'react'
-import RestartButton from ".";
+import HomeButton from ".";
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { GameContext } from "../../models/GameStateTypes";
 
-describe('RestartButton', () => {
+describe('HomeButton', () => {
 
     let btn;
     const mockGet = jest.fn();
@@ -19,7 +19,7 @@ describe('RestartButton', () => {
     }
 
     beforeAll(() => {
-        render(<RestartButton />, { wrapper: wrapper })
+        render(<HomeButton text={'Play Again?'} />, { wrapper: wrapper })
         btn = screen.getByRole('button');
     })
 

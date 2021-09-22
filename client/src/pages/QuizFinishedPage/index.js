@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 
 import './style.css'
-import RestartButton from "../../components/RestartButon";
+import { HomeButton } from "../../components";
 
 const Loading = () => {
   return <div class="lds-dual-ring"></div>;
@@ -62,7 +62,7 @@ const QuizFinishedPage = () => {
               }
             </tbody>
           </table>
-          <RestartButton />
+          <HomeButton text={'Play Again?'} />
         </div>
       </>
     )
