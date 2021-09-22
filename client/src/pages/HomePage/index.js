@@ -43,11 +43,8 @@ const HomePage = () => {
       <div className='container d-flex justify-content-center'>
         <CreateRoomButton />
       </div>
-      <ul className='container vw-100 row justify-content-center align-content-center'>
-        <h3 className='mt-3'>Join a Room</h3>
-        <RoomList rooms={rooms} />
-      </ul>
-    </div>
+      <RoomList rooms={rooms} />
+    </div >
   )
 };
 

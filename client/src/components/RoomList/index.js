@@ -15,17 +15,20 @@ const getCardColors = difficulty => {
 
 const RoomList = ({ rooms }) => {
     return (
-        rooms.map(room => {
-            return (<li className='card text-center mb-3 p-3' style={{
-                backgroundColor: getCardColors('EASY').bg,
-                color: getCardColors('EASY').fg
-            }} onClick={() => userEntersRoomHandler(room.admin)}>
-                <h3>{room.admin}'s Room</h3>
-                <span>{room.category}</span>
-                <span>{room.difficulty}</span>
-            </li>
-            )
-        })
+        <ul className='container vw-100 row justify-content-center align-content-center'>
+            <h3 className='mt-3'>Join a Room</h3>
+            {rooms.map(room => {
+                return (<li className='card text-center mb-3 p-3' style={{
+                    backgroundColor: getCardColors('EASY').bg,
+                    color: getCardColors('EASY').fg
+                }} onClick={() => userEntersRoomHandler(room.admin)}>
+                    <h3>{room.admin}'s Room</h3>
+                    <span>{room.category}</span>
+                    <span>{room.difficulty}</span>
+                </li>
+                )
+            })}
+        </ul>
     )
 }
 
