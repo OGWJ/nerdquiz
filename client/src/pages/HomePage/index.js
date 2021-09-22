@@ -20,19 +20,21 @@ const HomePage = () => {
     setRooms(allRoomsOnMount);
   }, []);
 
-  // Update rooms when they are created in real-time
-  socket.on("room created", (newRoom) => {
-    console.log(newRoom.admin);
-    setRooms(
-      rooms.push({
-        admin: newRoom.admin,
-        category: newRoom.category,
-        difficulty: newRoom.difficulty
-      })
-    );
-    console.log("new room");
-    console.log(rooms);
-  });
+  useEffect(async () => {
+    // Update rooms when they are created in real-time
+    socket.on("room created", (newRoom) => {
+      console.log(newRoom.admin);
+      setRooms(
+        rooms.push({
+          admin: newRoom.admin,
+          category: newRoom.category,
+          difficulty: newRoom.difficulty
+        })
+      );
+      console.log("new room");
+      console.log(rooms);
+    });
+  }, []);
 
   const joinRoom = (roomAdmin) => {
     console.log("joined room");
@@ -44,15 +46,17 @@ const HomePage = () => {
     // NOTE: Line below for temporary for development without socket
     game.setState(GameStateTypes.WAITING_ROOM);
   };
-
-  socket.on("room list", (allGames) => {
-    console.log(allGames);
-    setRooms(allGames);
-  });
-
-  socket.on("user enter room", () => {
-    game.setState(GameStateTypes.WAITING_ROOM);
-  });
+  useEffect(async () => {
+    socket.on("room list", (allGames) => {
+      console.log(allGames);
+      setRooms(allGames);
+    });
+  }, []);
+  useEffect(async () => {
+    socket.on("user enter room", () => {
+      game.setState(GameStateTypes.WAITING_ROOM);
+    });
+  }, []);
 
   const handleCreateRoom = () => {
     // stub
