@@ -8,7 +8,6 @@ const io = require("socket.io")(server, {
 });
 const he = require("he");
 
-let settings;
 
 const port = 5001;
 
@@ -19,12 +18,14 @@ server.listen(port, () => {
 
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
-
+  
   socket.on("get room list", () => {
     let allGames = GameConfig.gameData;
     socket.emit("room list", allGames);
   });
-
+  
+  let settings;
+  
   socket.on("create room", (roomSettings) => {
     console.log(`User ${socket.id} created a new room`);
     GameConfig.create(
@@ -33,24 +34,36 @@ io.on("connection", (socket) => {
       roomSettings.difficulty
     );
     socket.join(roomSettings.admin);
-    socket.emit("room created", roomSettings);
     settings = roomSettings;
+    socket.emit("room created", roomSettings);
   });
 
   socket.on("user enter room", (roomSettings) => {
     console.log(`User ${socket.id} clicked entered room`);
-
+    console.log("oioi",roomSettings)
     socket.join(roomSettings.roomId);
-    io.to(roomSettings.roomId).emit("user enter room");
+    //io.to(roomSettings.roomId).emit("user enter room", roomSettings);
+    socket.emit("user enter room", roomSettings)
     GameConfig.joinUser(roomSettings.roomId, roomSettings.username);
     let users = GameConfig.getAllUsers(roomSettings.roomId);
     console.log(users);
   });
 
-  socket.on("user start quiz", (roomId) => {
+  socket.on("user exit room", (settings) => {
+    console.log(settings)
+    if(settings.admin === settings.username){
+      GameConfig.deleteRoom(settings.admin)
+      socket.emit("quiz ended")
+    } else {
+      GameConfig.removeUser(settings.admin, settings.username)
+    }
+  })
+
+
+  socket.on("user starts quiz", (roomId) => {
     console.log(`User ${socket.id} clicked start quiz`);
 
-    io.to(roomId).emit("user start quiz");
+    io.to(roomId).emit("user started quiz");
 
     //use room settings to request from the trivia API with user input
     async function getQuestions(admin, cat, diff) {
@@ -80,15 +93,15 @@ io.on("connection", (socket) => {
       let correct_answers = retVal.results.map((a) => a.correct_answer);
 
       //send to function to take it turns and emit questions to the front end as accordingly
-      selectQuestions(questions, answers, correct_answers);
+      selectQuestions(questions, answers, correct_answers, admin);
     }
 
     // call function above
     getQuestions(settings.admin, settings.category, settings.difficulty);
 
-    const selectQuestions = (allQuestions, allAnswers, correct_answers) => {
+    const selectQuestions = (allQuestions, allAnswers, correct_answers, admin) => {
       // get length of client
-      let numClients = io.sockets.adapter.rooms.get(settings.admin).size;
+      let numClients = GameConfig.getAllUsers(admin).length
 
       console.log("clients " + numClients);
       let currentQuestion = 0;
