@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { socket } from "../../service/socket";
 import { userStartsQuizHandler } from "../../handlers/userRoomInteractionHandlers";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
-import Container from "react-bootstrap/Container";
 import './style.css';
 
 const getPlayersInRoom = async () => {
@@ -61,17 +60,17 @@ const WaitingRoomPage = () => {
   }
 
   return (
-    <Container className='row vw-100 p-nav d-flex justify-content-center'>
-      <Container className='col-sm'>
+    <div className='container row vw-100 p-nav d-flex justify-content-center'>
+      <div className='container col-sm'>
         <h3 className='pt-4'>{game.roomAdmin}'s Room</h3>
         <h5 className=''><small>Category is</small> <em>Video Games</em></h5>
         <h5 className=''><small>Difficulty is</small> <em>Hard!</em></h5>
-        <Container className='d-flex justify-content-center'>
+        <div className='container d-flex justify-content-center'>
           {isUsersRoom ? <button onClick={handleStuff} className='btn btn-success m-3'>Start Quiz</button> : null}
           <button onClick={handleExitRoom} className='btn btn-danger m-3'>Exit room</button>
-        </Container>
-      </Container>
-      <Container className='col-sm'>
+        </div>
+      </div>
+      <div className='col-sm'>
         <ul>
           <h3 className='pt-4'>Who's Playin'?</h3>
           {
@@ -81,8 +80,8 @@ const WaitingRoomPage = () => {
             })
           }
         </ul>
-      </Container>
-    </Container >
+      </div>
+    </div>
   );
 };
 

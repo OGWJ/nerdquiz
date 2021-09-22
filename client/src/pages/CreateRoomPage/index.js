@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import { createRoomHandler } from "../../handlers/createRoomHandler";
-import Container from "react-bootstrap/Container";
 import "./style.css";
 
 const CreateRoomPage = () => {
@@ -36,7 +35,7 @@ const CreateRoomPage = () => {
   }
 
   return (
-    <Container className="p-nav">
+    <div className="container p-nav">
       <button onClick={goBack} className="btn btn-warning">
         Cancel
       </button>
@@ -61,7 +60,7 @@ const CreateRoomPage = () => {
           </button>
         </form>
       </div>
-    </Container>
+    </div>
   );
 };
 

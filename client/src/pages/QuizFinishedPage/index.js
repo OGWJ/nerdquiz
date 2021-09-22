@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
-import Container from "react-bootstrap/Container";
 
 import './style.css'
+import RestartButton from "../../components/RestartButon";
 
 const Loading = () => {
   return <div class="lds-dual-ring"></div>;
@@ -62,7 +62,7 @@ const QuizFinishedPage = () => {
               }
             </tbody>
           </table>
-          <button onClick={handleClick} className='btn btn-success'>Go Again?</button>
+          <RestartButton />
         </div>
       </>
     )
