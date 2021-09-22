@@ -60,8 +60,9 @@ io.on("connection", (socket) => {
         // get length of client
         let numClients = io.sockets.adapter.rooms.get(settings.admin).size
         console.log("clients " + numClients)
-        let currentQuestion = 0;
         
+        
+        let currentQuestion = 0;
         
         const sendQuestion = () =>{   
           
@@ -71,21 +72,21 @@ io.on("connection", (socket) => {
           //decode from HTML special characters, remove the quotation marks, 
             let question = he.decode(JSON.stringify(allQuestions.questions[currentQuestion]).slice(1,-1))
             let options = allQuestions.answers[currentQuestion]
-            
+           
             //send questions & answers
               socket.emit("question", (question)) 
               socket.emit("options", options) 
              } else { socket.emit("quiz ended", roomId) }
+            }
             //send the first question
             sendQuestion()
-            }
+            
             //listen for answers, move to the next question, call sendQuestion again
              socket.on("answer", (e)=>
              {
                console.log(e)
                //if it is equal to the correct answer
                if(e === correct_answer[currentQuestion])
-             
                {
                   currentQuestion++ 
                   sendQuestion()
