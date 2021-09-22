@@ -24,26 +24,22 @@ const WaitingRoomPage = () => {
   }, [])
 
   useEffect(async () => {
-  // Listen for others entering room to update the state
-  socket.on('user enter room', eventInfo => {
-    setPlayers(prev => prev + eventInfo.player);
-  })}, [])
+    // Listen for others entering room to update the state
+    socket.on('user enter room', eventInfo => {
+      setPlayers(prev => prev + eventInfo.player);
+    })
+  }, [])
 
   useEffect(async () => {
-  // Listen for other leaving room to update the state
-  socket.on('user exits room', eventInfo => {
-    setPlayers(prev => prev.filter(player => player != eventInfo.player));
-  })}, [])
+    // Listen for other leaving room to update the state
+    socket.on('user exits room', eventInfo => {
+      setPlayers(prev => prev.filter(player => player != eventInfo.username));
+    })
+  }, [])
 
   // TODO create color generation stuff
 
-  const isUsersRoom = () => {
-    // get username
-    // get admin username
-    // compare
-    // return
-    return true
-  };
+  const isUsersRoom = () => game.username == game.admin ? true : false;
 
   const getRoomAdmin = () => {
     // stub
@@ -65,9 +61,9 @@ const WaitingRoomPage = () => {
   return (
     <div className='p-nav'>
       <button onClick={handleExitRoom}>Exit room</button>
-      <h3 className='pt-4 px-4'>{game.roomAdmin}'s Room</h3>
-      <h5 className='px-4'><small>Category is</small> <em>Video Games</em></h5>
-      <h5 className='px-4'><small>Difficulty is</small> <em>Hard!</em></h5>
+      <h3 className='pt-4 px-4'>{game.admin}'s Room</h3>
+      <h5 className='px-4'><small>Category is</small> <em>{game.category}</em></h5>
+      <h5 className='px-4'><small>Difficulty is</small> <em>{game.difficulty}</em></h5>
       <ul>
         {
           players.map(player => {
