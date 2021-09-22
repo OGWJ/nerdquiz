@@ -48,6 +48,7 @@ const QuizPage = () => {
     socket.on("quiz ended", (roomId)=>{
       clearInterval(clock)
       clock = 0;
+      localCount = 0;
       game.setState(GameStateTypes.QUIZ_FINISHED)
     })
   }
@@ -97,6 +98,7 @@ const QuizPage = () => {
     // stub
     // call userExitsRoomHandler(), then
     game.setState(GameStateTypes.QUIZ_FINISHED);
+   
   }
 
   return (

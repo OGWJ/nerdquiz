@@ -21,6 +21,7 @@ io.on("connection", (socket) => {
 
   socket.on("create room", (roomSettings) => {
     console.log(`User ${socket.id} created a new room`)
+    GameConfig.create(roomSettings.admin)
     socket.join(roomSettings.admin);
     socket.emit("room created", roomSettings); 
     settings = roomSettings
@@ -64,22 +65,20 @@ io.on("connection", (socket) => {
         //set q&a's
         let questions = retVal.results.map(q => q.question)
         let answers = retVal.results.map(a => [a.correct_answer, ...a.incorrect_answers])
-        let correct_answer = retVal.results.map(a => a.correct_answer)
+        let correct_answers = retVal.results.map(a => a.correct_answer)
         
         //send to function to take it turns and emit questions to the front end as accordingly
-        selectQuestions( questions, answers, correct_answer) 
+        selectQuestions( questions, answers, correct_answers) 
       }
 
       // call function above 
       getQuestions(settings.admin, settings.category, settings.difficulty)
 
-      const selectQuestions = (allQuestions, allAnswers, correct_answer) =>{
+      const selectQuestions = (allQuestions, allAnswers, correct_answers) =>{
         // get length of client
         let numClients = io.sockets.adapter.rooms.get(settings.admin).size
 
         console.log("clients " + numClients)
-        
-        
         let currentQuestion = 0;
         
         const sendQuestion = () =>{   
@@ -104,7 +103,7 @@ io.on("connection", (socket) => {
              {
                console.log(e)
                //if it is equal to the correct answer
-               if(e === correct_answer[currentQuestion])
+               if(e === correct_answers[currentQuestion])
                {
                   currentQuestion++ 
                   sendQuestion()

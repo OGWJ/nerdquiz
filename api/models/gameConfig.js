@@ -1,8 +1,6 @@
 
-
-
 class GameConfig {
-  constructor(roomId, questions, answers) {
+  constructor(roomId) {
     this.roomId = roomId;
     // this.genre = data.genre;
     // this.difficulty = data.difficulty;
@@ -14,8 +12,6 @@ class GameConfig {
         
       }
     ];
-    this.questions = questions;
-    this.answers = answers
     //this.startGame = false;
   }
   static gameData = [];
