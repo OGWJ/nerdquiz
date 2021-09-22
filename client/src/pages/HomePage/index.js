@@ -23,7 +23,7 @@ const HomePage = () => {
   useEffect(async () => {
     // Update rooms when they are created in real-time
     socket.on("room created", (newRoom) => {
-      console.log(newRoom.admin);
+      
       setRooms(
         rooms.push({
           admin: newRoom.admin,
@@ -34,19 +34,16 @@ const HomePage = () => {
     });
   }, []);
 
-  const joinRoom = (roomAdmin) => {
+  const joinRoom = (room) => {
+    userEntersRoomHandler(room.admin)
     console.log("joined room");
-    socket.emit("joined room", {
-      username: localStorage.getItem("username"),
-      roomAdmin: roomAdmin
-    });
 
     // NOTE: Line below for temporary for development without socket
     game.setState(GameStateTypes.WAITING_ROOM);
+    game.setGameSettings(room)
   };
   useEffect(async () => {
     socket.on("room list", (allGames) => {
-      console.log(allGames);
       setRooms(allGames);
     });
   }, []);
@@ -96,7 +93,7 @@ const HomePage = () => {
               <h3>{room.admin}'s Room</h3>
               <span>{room.category}</span>
               <span>{room.difficulty}</span>
-              <button onClick={(e) => userEntersRoomHandler(room.admin)}>
+              <button onClick={(e) => joinRoom(room)}>
                 Join
               </button>
             </li>
