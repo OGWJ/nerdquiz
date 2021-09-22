@@ -31,8 +31,6 @@ const HomePage = () => {
           difficulty: newRoom.difficulty
         })
       );
-      console.log("new room");
-      console.log(rooms);
     });
   }, []);
 
