@@ -29,7 +29,6 @@ const QuizPage = () => {
       if(localCount === 0){
         let ans = 'null';
         socket.emit("answer", ans)
-        console.log("end of time reached")
       }
 
       // issue here with count and local value in interval loop
@@ -46,6 +45,7 @@ const QuizPage = () => {
       }
 
     }, 1000);
+    
   }
 
   // should handle component unmount with useEffect cleanup
@@ -86,6 +86,8 @@ const QuizPage = () => {
   socket.on("options", (options)=>{
     setOptions(options)
   })
+
+
 
   const exitHandler = () => {
     // stub

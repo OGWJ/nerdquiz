@@ -41,17 +41,31 @@ io.on("connection", (socket) => {
 
       //use room settings to request from the trivia API with user input
       async function getQuestions(admin, cat, diff) {
-        const url = `https://opentdb.com/api.php?amount=50&category=${cat}&difficulty=${diff.toLowerCase()}`;
-        let { data } = await axios.get(url);
-        
+        let retVal;
+        if(cat == "16"|| cat == "29"){
+          const url = `https://opentdb.com/api.php?amount=50&category=${cat}`;
+          const { data }  = await axios.get(url);
+          retVal = data
+          if(data.response_code === 1){
+            console.log("no questions found")
+            }
+        } else {
+          const url = `https://opentdb.com/api.php?amount=50&category=${cat}&difficulty=${diff.toLowerCase()}`;
+          const { data } = await axios.get(url);
+          retVal = data
+          if(data.response_code === 1){
+            console.log("no questions found") 
+          }}
+
+          console.log(retVal)
         //set q&a's
-        let questions = data.results.map(q => q.question)
-        let answers = data.results.map(a => [a.correct_answer, ...a.incorrect_answers])
-        let correct_answer = data.results.map(a => a.correct_answer)
+        let questions = retVal.results.map(q => q.question)
+        let answers = retVal.results.map(a => [a.correct_answer, ...a.incorrect_answers])
+        let correct_answer = retVal.results.map(a => a.correct_answer)
         
         //send to function to take it turns and emit questions to the front end as accordingly
-        selectQuestions(GameConfig.create(admin, questions, answers), correct_answer)
-        }
+        selectQuestions(GameConfig.create(admin, questions, answers), correct_answer) 
+      }
 
       // call function above 
       getQuestions(settings.admin, settings.category, settings.difficulty)
