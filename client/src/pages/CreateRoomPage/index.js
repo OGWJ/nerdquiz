@@ -43,9 +43,9 @@ const CreateRoomPage = () => {
       </button>
       <form name="create-room-form" onSubmit={createRoomHandlerWrapper}>
         <select id="category-select" className="form-select my-4 text-center">
-          <option value="15">Video Games</option>
-          <option value="16">Board Games</option>
-          <option value="29">Comics</option>
+          <option value="Video Games">Video Games</option>
+          <option value="Board Games">Board Games</option>
+          <option value="Comics">Comics</option>
         </select>
         <select
           id="select-difficulty"
