@@ -4,13 +4,12 @@ import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import "./style.css";
 
 const LandingPage = () => {
-
   const game = useContext(GameContext);
 
   const usernameSubmitHandler = (e) => {
     e.preventDefault();
     const name = e.target[0].value;
-    localStorage.setItem("username", name);
+    game.setUsername(name);
     game.setState(GameStateTypes.HOME);
   };
 

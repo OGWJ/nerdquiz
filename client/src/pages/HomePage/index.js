@@ -23,7 +23,6 @@ const HomePage = () => {
   useEffect(async () => {
     // Update rooms when they are created in real-time
     socket.on("room created", (newRoom) => {
-      
       setRooms(
         rooms.push({
           admin: newRoom.admin,
@@ -35,12 +34,12 @@ const HomePage = () => {
   }, []);
 
   const joinRoom = (room) => {
-    userEntersRoomHandler(room.admin)
+    userEntersRoomHandler(room.admin, game.username);
     console.log("joined room");
 
     // NOTE: Line below for temporary for development without socket
     game.setState(GameStateTypes.WAITING_ROOM);
-    game.setGameSettings(room)
+    game.setGameSettings(room);
   };
   useEffect(async () => {
     socket.on("room list", (allGames) => {
@@ -72,7 +71,7 @@ const HomePage = () => {
 
   return (
     <div className="container mt-4 p-nav">
-      <h3 className="m-4">Welcome {localStorage.getItem("username")}</h3>
+      <h3 className="m-4">Welcome {game.username}</h3>
       <div className="container d-flex justify-content-center">
         <button className="btn btn-secondary" onClick={handleCreateRoom}>
           Create a Room
@@ -93,9 +92,7 @@ const HomePage = () => {
               <h3>{room.admin}'s Room</h3>
               <span>{room.category}</span>
               <span>{room.difficulty}</span>
-              <button onClick={(e) => joinRoom(room)}>
-                Join
-              </button>
+              <button onClick={(e) => joinRoom(room)}>Join</button>
             </li>
           );
         })}

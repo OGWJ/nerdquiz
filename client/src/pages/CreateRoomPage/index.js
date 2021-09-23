@@ -26,15 +26,15 @@ const CreateRoomPage = () => {
   // }, [selectDifficultyColor])
 
   const createRoomHandlerWrapper = (e) => {
-    let settings = createRoomHandler(e);
-    console.log(settings)
-    game.setGameSettings(settings)
+    let settings = createRoomHandler(e, game.username);
+    console.log(settings);
+    game.setGameSettings(settings);
     game.setState(GameStateTypes.WAITING_ROOM);
-  }
+  };
 
   const goBack = () => {
     game.setState(GameStateTypes.HOME);
-  }
+  };
 
   return (
     <div className="p-nav w-100 d-flex justify-content-center">

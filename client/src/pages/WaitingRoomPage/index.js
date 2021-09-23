@@ -12,7 +12,7 @@ const getPlayersInRoom = async () => {
 
 const WaitingRoomPage = () => {
   const game = useContext(GameContext);
-  const [players, setPlayers] = useState([{ user: game.admin }]);
+  const [players, setPlayers] = useState([{ user: game.gameSettings.admin }]);
   // useEffect(async () => {
   //   // temp
   //   // will be roomId = game.roomId;
@@ -43,12 +43,18 @@ const WaitingRoomPage = () => {
     socket.on("user started quiz", () => {
       game.setState(GameStateTypes.QUIZ);
     });
+
+    socket.on("quiz ended", () => {
+      console.log("quiz ended");
+      game.setState(GameStateTypes.HOME);
+    });
   }, []);
 
   // TODO create color generation stuff
 
-  const isUsersRoom = () =>
-    localStorage.getItem("username") == game.gameSettings.admin ? true : false;
+  const isUsersRoom = () => {
+    game.username == game.gameSettings.admin ? true : false;
+  };
 
   const handleStuff = () => {
     const roomId = game.gameSettings.admin;
@@ -59,6 +65,7 @@ const WaitingRoomPage = () => {
 
   const handleExitRoom = () => {
     // emit user exited room, then
+    console.log(game.gameSettings.admin);
     userExitsRoomHandler(game.gameSettings.admin);
     game.setState(GameStateTypes.HOME);
   };

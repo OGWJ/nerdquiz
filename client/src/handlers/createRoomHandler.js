@@ -1,19 +1,14 @@
-
 import { socket } from "../service/socket";
 
-export const createRoomHandler = (e) => {
-  
+export const createRoomHandler = (e, username) => {
   const settings = e.target;
   e.preventDefault();
   const roomSettings = {
-    admin: localStorage.getItem("username"),
+    admin: username,
     category: settings[0].value,
     difficulty: settings[1].value
   };
-  
-  
+
   socket.emit("create room", roomSettings);
   return roomSettings;
-
-
 };

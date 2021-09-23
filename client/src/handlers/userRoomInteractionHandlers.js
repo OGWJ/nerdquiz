@@ -1,16 +1,17 @@
+import { GameConfig } from "../../../api/models/gameConfig";
 import { socket } from "../service/socket";
 
-export const userEntersRoomHandler = (roomId) => {
+export const userEntersRoomHandler = (roomId, username) => {
   let roomSettings = {
-    username: localStorage.getItem("username"),
+    username: username,
     roomId: roomId
   };
   socket.emit("user enter room", roomSettings);
 };
 
-export const userExitsRoomHandler = (admin) => {
-  socket.emit("user exit room", {username: localStorage.getItem("username"), admin: admin});
-  console.log("user exited")
+export const userExitsRoomHandler = (admin, username) => {
+  socket.emit("user exit room", { username: username, admin: admin });
+  console.log("user exited");
 };
 
 export const userStartsQuizHandler = (roomId) => {
