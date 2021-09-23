@@ -7,7 +7,7 @@ const Header = () => {
   let navLink;
 
   if (location.pathname === "/leaderboard") {
-    navLink = <NavLink activeClassName="home-link" to="/home/:username">Back to Home</NavLink>;
+    navLink = <NavLink activeClassName="home-link" to="/">Play Again</NavLink>;
   } else {
     navLink = <NavLink activeClassName="active" to="/leaderboard">Leaderboard</NavLink>;
     //  navLink = <a href="http://localhost:8080/leaderboard">Leaderboard</a>; 

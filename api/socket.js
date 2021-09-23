@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
     );
     let users = GameConfig.getAllUsers(roomSettings.roomId);
     roomSettings.users = users;
-    socket.emit("user enter room", roomSettings);
+    io.to(roomSettings.roomId).emit("user entered room", roomSettings);
   });
 
   socket.on("user exit room", (settings) => {
@@ -197,20 +197,21 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("disconnect", () => {
-    // let userGame = GameConfig.gameData.find((game) => {
-    //   return game.users.find((user) => {
-    //     return user.socketId === socket.id;
-    //   });
-    // });
+    // Remove, notify and redirect rooms when users disconnect
     let username;
-    GameConfig.gameData.forEach((game) => {
-      username = game.findUsernameBySocketId(socket.id);
-      if (username) {
-        GameConfig.removeUser(game.roomId, username);
-        io.to(game.roomId).emit("quiz ended");
-        console.log(`user ${socket.id} disconnected`);
-        return;
+    for (let i = 0; i < GameConfig.gameData.length; i++) {
+      for (let j = 0; j < GameConfig.gameData[i].users.length; j++) {
+        if (GameConfig.gameData[i].users[j].socketId === socket.id) {
+          username = GameConfig.gameData[i].users[j].user;
+          if (GameConfig.gameData[i].admin === username) {
+            io.to(GameConfig.gameData[i].admin).emit("quiz ended");
+            GameConfig.gameData = GameConfig.gameData.filter(game => game.admin != username);
+            return
+          }
+          // else
+          GameConfig.removeUser(GameConfig.gameData[i].admin, GameConfig.gameData[i].users[j].user)
+        }
       }
-    });
+    }
   });
 });

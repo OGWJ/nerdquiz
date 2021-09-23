@@ -120,7 +120,7 @@ const QuizPage = () => {
 
   useEffect(async () => {
     socket.on("question", (questionInfo) => {
-      console.log(questionInfo);
+      setCount(10);
       setQuestion(questionInfo.questions);
       setOptions(questionInfo.options);
       setIsUserTurn(game.username === questionInfo.userTurn ? true : false);

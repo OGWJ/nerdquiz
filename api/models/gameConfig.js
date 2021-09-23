@@ -107,8 +107,6 @@ class GameConfig {
       if (element.user === user){score = element.score++}
       score = element.score
     });
-
-    
     let info = {username: user, genre: all.category, score: score }
     return info;
   }
