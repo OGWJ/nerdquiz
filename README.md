@@ -44,3 +44,6 @@ This is a multiplayer(hopefully) nerd quiz game.
 6. Built the backbone of the back-end
 7. Implemented SocketIO
 8. Debugged to make sure the app is stable
+
+## Licence
+* [Licence](https://opensource.org/licenses/mit-license.php)
