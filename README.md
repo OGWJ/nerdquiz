@@ -3,9 +3,12 @@
 ## About
 This is a multiplayer(hopefully) nerd quiz game. 
 
-## Installation
-
-## Usage
+## Installation and Usage
+1. Clone this repo
+2. run ```bash _scripts/startDev.sh``` in your terminal to start the back-end
+3. open another terminal and cd into /client
+4. run ```npm i``` 
+5. run ```npm run dev``` to start the front-end
 
 ## Planning tools
 * [Miro](https://miro.com/)
