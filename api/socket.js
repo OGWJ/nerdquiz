@@ -31,7 +31,8 @@ io.on("connection", (socket) => {
     GameConfig.create(
       roomSettings.admin,
       roomSettings.category,
-      roomSettings.difficulty
+      roomSettings.difficulty,
+      roomSettings.socketId
     );
     socket.join(roomSettings.admin);
     settings = roomSettings;
@@ -135,11 +136,19 @@ io.on("connection", (socket) => {
           );
           let options = allAnswers[currentQuestion];
 
+          let userTurnConfig = GameConfig.getUserGoByRoomId(roomId);
+          console.log("userTurnConfig", userTurnConfig);
           //send questions & answers
-          socket.emit("question", question);
-          socket.emit("options", options);
+          // io.to(roomId).emit("question", question);
+          // io.to(roomId).emit("options", options);
+          let questionInfo = {
+            questions: question,
+            options: options,
+            userTurn: userTurnConfig
+          };
+          io.to(roomId).emit("question", questionInfo);
         } else {
-          socket.emit("quiz ended", roomId);
+          io.to(roomId).emit("quiz ended", roomId);
         }
       };
       //send the first question
@@ -180,8 +189,8 @@ io.on("connection", (socket) => {
     GameConfig.gameData.forEach((game) => {
       username = game.findUsernameBySocketId(socket.id);
       if (username) {
-        GameConfig.removeUser(roomId, username);
-        io.emit("user exit room");
+        GameConfig.removeUser(game.roomId, username);
+        io.to(game.roomId).emit("quiz ended");
         console.log(`user ${socket.id} disconnected`);
         return;
       }
