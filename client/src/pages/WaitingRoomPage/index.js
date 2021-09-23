@@ -33,8 +33,8 @@ const WaitingRoomPage = () => {
 
   useEffect(async () => {
     // Listen for other leaving room to update the state
-    socket.on("user exit room", (eventInfo) => {
-      console.log("user exit room");
+    socket.on("user exited room", (eventInfo) => {
+      console.log("user exited room");
       setPlayers((prev) => {
         prev.filter((player) => player.user != eventInfo.user);
       });
