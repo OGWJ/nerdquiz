@@ -38,6 +38,7 @@ const WaitingRoomPage = () => {
       setPlayers((prev) => {
         prev.filter((player) => player.user != eventInfo.user);
       });
+      if (players.length < 1) game.setState(GameStateTypes.HOME);
     });
 
     socket.on("user started quiz", () => {
