@@ -1,4 +1,4 @@
-const db = require("../dbConfig/init");
+const db = require("../dbConfig/init.js");
 
 class Score {
   constructor(data) {
@@ -22,21 +22,33 @@ class Score {
     });
   }
 
-  static create(scoreData) {
+  static create(username, genre, score) {
     return new Promise(async (res, rej) => {
+
       try {
-        const { username, genre, score } = scoreData;
-        let result = await db.query(
-          `INSERT INTO scores (username, genre, score) VALUES ($1, $2, $3) RETURNING *;`,
-          [username, genre, score]
-        );
-        let newScore = new Score(result.rows[0]);
-        res(newScore);
-      } catch (err) {
-        rej(`Error creating score: ${err}`);
+        let currentUser = await db.query(
+        `SELECT username FROM scores WHERE username = $1;`,[username]);
+        if(currentUser.rows[0].username !== username){
+          let result = await db.query(
+          `INSERT INTO scores (username, genre, score) VALUES ($1, $2, $3)  RETURNING *;`,
+          [username, genre, score]);
+          console.log("added", result.rows[0])
+          let newScore = new Score(result.rows[0]);
+          res(newScore);
+        } else {
+          let result = await db.query(
+          `UPDATE scores SET score = $2 WHERE score < $2 AND username = $1 RETURNING *;`,
+          [username, score]);
+          console.log("update", result.rows)
+          res(result);
+        }
       }
-    });
+      catch (err) {
+      rej(`Error creating score: ${err}`)};
+    })
   }
+    
+  
 
   static findByGenre(genre) {
     return new Promise(async (res, rej) => {
@@ -54,4 +66,4 @@ class Score {
   }
 }
 
-module.exports = Score;
+module.exports = {Score};
