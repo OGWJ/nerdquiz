@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
+import { socket } from "../../service/socket";
 
 import './style.css'
 
@@ -10,6 +11,7 @@ const QuizFinishedPage = () => {
   const handleClick = () => {
     game.setState(GameStateTypes.HOME);
   }
+ socket.on("scores page", scores => console.log(scores))
 
   return (
     <>
