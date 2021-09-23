@@ -46,10 +46,11 @@ const QuizPage = () => {
 
     }, 1000);
     
-    socket.on("quiz ended", (roomId)=>{
+    socket.on("quiz ended", (scores)=>{
       clearInterval(clock)
       clock = 0;
       localCount = 0;
+      socket.emit("scores page", scores)
       game.setState(GameStateTypes.QUIZ_FINISHED)
     })
   }
@@ -61,7 +62,8 @@ const QuizPage = () => {
 
   const submitAnswer = (e) => {
     // stub
-    socket.emit("answer", e)
+    let settings = {userAnswer: e, username: game.username, room: game.gameSettings.admin}
+    socket.emit("answer", settings)
     console.log(e)
     setIsUserTurn(prev => !prev)
     setCount(10);
