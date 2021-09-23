@@ -31,8 +31,14 @@ const QuizPage = () => {
     } else {
       setCount(prev => prev - 1);
     }
+  }
 
-  };
+  socket.on("quiz ended", (roomId) => {
+    clearInterval(clock);
+    clock = 0;
+    localCount = 0;
+    game.setState(GameStateTypes.QUIZ_FINISHED);
+  });
 
   useInterval(decreaseCount, 1000);
 
@@ -84,7 +90,6 @@ const QuizPage = () => {
   const submitAnswer = (e) => {
     // stub
     socket.emit("answer", { ...e, admin: game.gameSettings.admin });
-    console.log(e);
     setIsUserTurn(false);
     setCount(10);
 

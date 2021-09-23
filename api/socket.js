@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { GameConfig } = require("./models/gameConfig");
-
+const { Score } = require("./models/score");
 const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
       io.to(settings.admin).emit("quiz ended");
     } else {
       GameConfig.removeUser(settings.admin, settings.username);
-      io.to(settings.admin).emit("user exit room", { user: settings.username });
+      io.to(settings.admin).emit("user exited room", { user: settings.username });
     }
   });
 

@@ -89,13 +89,15 @@ class GameConfig {
 
   static removeUser(roomId, user) {
     console.log("Removed User");
+
     let currentGame = GameConfig.gameData.find(
       (game) => game.roomId === roomId
     );
-    console.log(currentGame.users);
+    //console.log(currentGame.users);
+    if(currentGame){
     currentGame.users = currentGame.users.filter(
       (player) => player.name !== user
-    );
+    );}
   }
 
   static getSettings(roomId) {
