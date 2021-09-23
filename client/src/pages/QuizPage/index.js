@@ -18,7 +18,7 @@ const QuizPage = () => {
 
   const sendNullAnswer = () => {
     console.log('sent null answer')
-    socket.emit("answer", { admin: game.gameSettings.admin });
+    socket.emit("answer", { username: game.username, admin: game.gameSettings.admin });
   }
 
   const decreaseCount = () => {
@@ -89,7 +89,7 @@ const QuizPage = () => {
 
   const submitAnswer = (e) => {
     // stub
-    socket.emit("answer", { ...e, admin: game.gameSettings.admin });
+    socket.emit("answer", { e, username: game.username, admin: game.gameSettings.admin });
     setIsUserTurn(false);
     setCount(10);
 

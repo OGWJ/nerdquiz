@@ -87,6 +87,32 @@ class GameConfig {
     );
   }
 
+  static getUserScore(user, roomId){
+    let all = GameConfig.gameData.find((game) => game.roomId === roomId)
+    let score;
+    //let info = {user: user, score: all.users.user.score}
+    all.users.forEach(element => {
+      if (element.user === user){score = element.score}
+    });
+    score++
+    let info = {username: user, genre: all.category, score:score}
+    return info;
+  }
+
+  static updateUserScore(user, roomId){
+    let all = GameConfig.gameData.find((game) => game.roomId === roomId)
+    let score;
+    //let info = {user: user, score: all.users.user.score}
+    all.users.forEach(element => {
+      if (element.user === user){score = element.score++}
+      score = element.score
+    });
+
+    
+    let info = {username: user, genre: all.category, score: score }
+    return info;
+  }
+
   static removeUser(roomId, user) {
     console.log("Removed User");
 

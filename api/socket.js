@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("user exit room", (settings) => {
-    console.log(settings);
+    
     if (settings.admin === settings.username) {
       GameConfig.deleteRoom(settings.admin);
       io.to(settings.admin).emit("quiz ended");
@@ -109,7 +109,7 @@ io.on("connection", (socket) => {
     if (currentQuestion <= numClients * 10 + 1) {
       //decode from HTML special characters, remove the quotation marks,
       let question = GameConfig.getQuestionsForGame(admin)
-      console.log(question)
+     
       question = he.decode(
         JSON.stringify(question.questions[currentQuestion]).slice(1, -1)
       );
@@ -125,7 +125,7 @@ io.on("connection", (socket) => {
         options: options,
         userTurn: userTurnConfig
       };
-      // console.log(questionInfo.options)
+    
       io.to(admin).emit("question", questionInfo);
     } else {
       io.to(admin).emit("quiz ended", admin);
@@ -144,8 +144,12 @@ io.on("connection", (socket) => {
     let currentQuestion = GameConfig.getQuestionNumberForGame(e.admin);
     let allQuestions = GameConfig.getQuestionsForGame(e.admin);
     let correct_answer = allQuestions.correct_answers[currentQuestion];
-    if (e === correct_answer) {
+    let info = GameConfig.getUserScore(e.username, e.admin)
+    console.log(info)
+    if (e.e === correct_answer) {
       GameConfig.incrementQuestionNumberForGame(e.admin);
+      let score = GameConfig.updateUserScore(e.username, e.admin)
+      console.log(score)
       // currentQuestion++;
       sendQuestion(e.admin);
       console.log("correct");
@@ -158,7 +162,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("user starts quiz", async (roomId) => {
-    // console.log(`User ${socket.id} clicked start quiz`);
+  
 
     let questionSettings = GameConfig.getSettings(roomId);
     const questions = await getQuestions(
@@ -166,7 +170,7 @@ io.on("connection", (socket) => {
       questionSettings.category,
       questionSettings.difficulty
     );
-    // console.log(questions);
+  
     GameConfig.setQuestionsForGame(roomId, questions)
     sendQuestion(roomId)
 
