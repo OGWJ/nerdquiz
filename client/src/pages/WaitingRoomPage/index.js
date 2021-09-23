@@ -45,7 +45,7 @@ const WaitingRoomPage = () => {
       game.setState(GameStateTypes.QUIZ);
     });
 
-    socket.on("quiz ended", () => {
+    socket.on("quiz ended", (gameScores) => {
       console.log("quiz ended");
       game.setState(GameStateTypes.HOME);
     });

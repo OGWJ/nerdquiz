@@ -87,7 +87,7 @@ class GameConfig {
     );
   }
 
-  static getUserScore(user, roomId){
+  static getUserScores(user, roomId){
     let all = GameConfig.gameData.find((game) => game.roomId === roomId)
     let score;
     //let info = {user: user, score: all.users.user.score}
@@ -97,6 +97,15 @@ class GameConfig {
     score++
     let info = {username: user, genre: all.category, score:score}
     return info;
+  }
+
+  static getGameScores(roomId){
+    let all = GameConfig.gameData.find((game) => game.roomId === roomId)
+    let scores = (all.users)
+    console.log(scores)
+    //let info = {user: user, score: all.users.user.score}
+    
+    return scores;
   }
 
   static updateUserScore(user, roomId){

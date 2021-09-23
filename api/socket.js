@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
   socket.on("user exit room", (settings) => {
     
     if (settings.admin === settings.username) {
-      GameConfig.deleteRoom(settings.admin);
+      
       io.to(settings.admin).emit("quiz ended");
     } else {
       GameConfig.removeUser(settings.admin, settings.username);
@@ -128,7 +128,16 @@ io.on("connection", (socket) => {
     
       io.to(admin).emit("question", questionInfo);
     } else {
-      io.to(admin).emit("quiz ended", admin);
+      let players = GameConfig.getAllUsers(admin)
+  
+      for(let i = 0; i < numClients; i++){
+        let player = players[i].user
+        let settings = GameConfig.getUserScores(player, admin)
+        Score.create(settings.username, settings.genre, settings.score)
+      }
+      let gameScores = {...GameConfig.getGameScores(admin), admin: admin}
+      GameConfig.deleteRoom(admin)
+      io.to(admin).emit("quiz ended", gameScores);
     }
   };
 
@@ -144,8 +153,6 @@ io.on("connection", (socket) => {
     let currentQuestion = GameConfig.getQuestionNumberForGame(e.admin);
     let allQuestions = GameConfig.getQuestionsForGame(e.admin);
     let correct_answer = allQuestions.correct_answers[currentQuestion];
-    let info = GameConfig.getUserScore(e.username, e.admin)
-    console.log(info)
     if (e.e === correct_answer) {
       GameConfig.incrementQuestionNumberForGame(e.admin);
       let score = GameConfig.updateUserScore(e.username, e.admin)

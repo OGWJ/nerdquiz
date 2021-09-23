@@ -21,6 +21,7 @@ class Score {
       }
     });
   }
+  
 
   static create(username, genre, score) {
     return new Promise(async (res, rej) => {

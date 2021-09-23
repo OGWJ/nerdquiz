@@ -33,7 +33,7 @@ const QuizPage = () => {
     }
   }
 
-  socket.on("quiz ended", (roomId) => {
+  socket.on("quiz ended", () => {
     clearInterval(clock);
     clock = 0;
     localCount = 0;

@@ -11,7 +11,9 @@ const QuizFinishedPage = () => {
   const handleClick = () => {
     game.setState(GameStateTypes.HOME);
   }
- socket.on("scores page", scores => console.log(scores))
+  socket.on("quiz ended", settings =>{
+    console.log(settings)
+  })
 
   return (
     <>
