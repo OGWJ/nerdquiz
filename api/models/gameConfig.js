@@ -33,7 +33,6 @@ class GameConfig {
     let currentGame = GameConfig.gameData.find(
       (game) => game.roomId === roomId
     );
-    console.log(currentGame);
     return currentGame.users;
   }
   static deleteRoom(roomId) {

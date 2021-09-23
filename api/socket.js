@@ -34,7 +34,6 @@ io.on("connection", (socket) => {
     );
     socket.join(roomSettings.admin);
     settings = roomSettings;
-    console.log(roomSettings);
     socket.emit("room created", roomSettings);
   });
 
@@ -49,7 +48,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("user exit room", (settings) => {
-    console.log(settings);
     if (settings.admin === settings.username) {
       GameConfig.deleteRoom(settings.admin);
       io.to(settings.admin).emit("quiz ended");
@@ -73,20 +71,29 @@ io.on("connection", (socket) => {
     //use room settings to request from the trivia API with user input
     async function getQuestions(admin, cat, diff) {
       let retVal;
-      if (cat == "16" || cat == "29") {
-        const url = `https://opentdb.com/api.php?amount=50&category=${cat}`;
+      if (cat === 'Video Game'){
+        const url = `https://opentdb.com/api.php?amount=50&category=15&difficulty=${diff.toLowerCase()}`
         const { data } = await axios.get(url);
-        retVal = data;
         if (data.response_code === 1) {
           console.log("no questions found");
         }
-      } else {
-        const url = `https://opentdb.com/api.php?amount=50&category=${cat}&difficulty=${diff.toLowerCase()}`;
-        const { data } = await axios.get(url);
         retVal = data;
+      }
+      else if (cat === 'Board Games'){
+        const url = `https://opentdb.com/api.php?amount=50&category=16`
+        const { data } = await axios.get(url);
         if (data.response_code === 1) {
           console.log("no questions found");
         }
+        retVal = data;
+      }
+      else{
+        const url = `https://opentdb.com/api.php?amount=50&category=29`
+        const { data } = await axios.get(url);
+        if (data.response_code === 1) {
+          console.log("no questions found");
+        }
+        retVal = data;
       }
 
       //set q&a's
@@ -136,7 +143,6 @@ io.on("connection", (socket) => {
 
       //listen for answers, move to the next question, call sendQuestion again
       socket.on("answer", (e) => {
-        console.log(e);
         //if it is equal to the correct answer
         if (e === correct_answers[currentQuestion]) {
           currentQuestion++;
