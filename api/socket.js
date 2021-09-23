@@ -17,6 +17,7 @@ server.listen(port, () => {
 
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
+  socket.emit("user connects", socket.id);
 
   socket.on("get room list", () => {
     let allGames = GameConfig.gameData;
@@ -34,14 +35,18 @@ io.on("connection", (socket) => {
     );
     socket.join(roomSettings.admin);
     settings = roomSettings;
-    socket.emit("room created", roomSettings);
+    socket.broadcast.emit("room created", roomSettings);
   });
 
   socket.on("user enter room", (roomSettings) => {
     console.log(`User ${socket.id} clicked entered room`);
     socket.join(roomSettings.roomId);
     //io.to(roomSettings.roomId).emit("user enter room", roomSettings);
-    GameConfig.joinUser(roomSettings.roomId, roomSettings.username);
+    GameConfig.joinUser(
+      roomSettings.roomId,
+      roomSettings.username,
+      roomSettings.socketId
+    );
     let users = GameConfig.getAllUsers(roomSettings.roomId);
     roomSettings.users = users;
     socket.emit("user enter room", roomSettings);
@@ -166,7 +171,20 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("disconnect", () => {
-    io.emit("user exit room");
-    console.log(`user ${socket.id} disconnected`);
+    // let userGame = GameConfig.gameData.find((game) => {
+    //   return game.users.find((user) => {
+    //     return user.socketId === socket.id;
+    //   });
+    // });
+    let username;
+    GameConfig.gameData.forEach((game) => {
+      username = game.findUsernameBySocketId(socket.id);
+      if (username) {
+        GameConfig.removeUser(roomId, username);
+        io.emit("user exit room");
+        console.log(`user ${socket.id} disconnected`);
+        return;
+      }
+    });
   });
 });
