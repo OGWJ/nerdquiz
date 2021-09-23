@@ -20,21 +20,26 @@ const HomePage = () => {
     setRooms(allRoomsOnMount);
   }, []);
 
-  useEffect(async () => {
-    // Update rooms when they are created in real-time
-    socket.on("room created", (newRoom) => {
-      setRooms(
-        rooms.push({
-          admin: newRoom.admin,
-          category: newRoom.category,
-          difficulty: newRoom.difficulty
-        })
-      );
-    });
-  }, []);
+  const addRoom = (newRoom) => {
+    // setRooms([newRoom]);
+    let newValue = rooms;
+    newValue.push(newRoom);
+    console.log(newValue);
+    setRooms(newValue);
+    // console.log(rooms);
+  };
+
+  // useEffect(async () => {
+  // Update rooms when they are created in real-time
+  socket.once("room created", (newRoom) => {
+    console.log(newRoom);
+    console.log("room created");
+    addRoom(newRoom);
+  });
+  // }, []);
 
   const joinRoom = (room) => {
-    userEntersRoomHandler(room.admin, game.username);
+    userEntersRoomHandler(room.admin, game.username, game.socketId);
     console.log("joined room");
 
     // NOTE: Line below for temporary for development without socket
