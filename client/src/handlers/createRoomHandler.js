@@ -10,6 +10,8 @@ export const createRoomHandler = (e, username, socketId) => {
     difficulty: settings[1].value
   };
 
+  console.log(roomSettings);
+
   socket.emit("create room", roomSettings);
   return roomSettings;
 };
