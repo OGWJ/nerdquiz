@@ -4,14 +4,15 @@ class GameConfig {
     this.category = category;
     this.difficulty = difficulty;
     this.admin = admin;
+    this.previousUser = null;
     this.users = [
       {
-        socketId: this.socketId,
+        socketId: socketId,
         user: this.roomId,
         score: 0
       }
     ];
-    //this.startGame = false;
+    // this.startGame = false;
   }
   static gameData = [];
 
@@ -68,9 +69,35 @@ class GameConfig {
   }
 
   findUsernameBySocketId(socketId) {
-    let findUser = this.users.find((user) => user.socketId === socketId);
-    if (findUser) return findUser.username;
+    console.log(socketId);
+    console.log(this.users);
+    let findUser = this.users.find((user) => user.socketId == socketId);
+    if (findUser) return findUser.user;
     return;
+  }
+
+  static getUserGoByRoomId(roomId) {
+    let userGo;
+    GameConfig.gameData.forEach((game) => {
+      if (game.roomId === roomId) {
+        console.log(game.getUsersGo());
+        userGo = game.getUsersGo();
+        return;
+      }
+    });
+    return userGo;
+  }
+
+  getUsersGo() {
+    if (
+      !this.previousUser ||
+      this.users.indexOf(this.previousUser === this.users.length - 1)
+    ) {
+      console.log(this.users[0].user);
+      return this.users[0].user;
+    }
+    console.log(this.users[this.users.indexOf(this.previousUser) + 1].user);
+    return this.users[this.users.indexOf(this.previousUser) + 1].user;
   }
 }
 
