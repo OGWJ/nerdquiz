@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { GameConfig } = require("./models/gameConfig");
-
+const { Score } = require("./models/score");
 const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
       io.to(settings.admin).emit("quiz ended");
     } else {
       GameConfig.removeUser(settings.admin, settings.username);
-      io.to(settings.admin).emit("user exit room", { user: settings.username });
+      io.to(settings.admin).emit("user exited room", { user: settings.username });
     }
   });
 
@@ -62,6 +62,7 @@ io.on("connection", (socket) => {
 
     io.to(roomId).emit("user started quiz");
     let questionSettings = GameConfig.getSettings(roomId);
+    
     getQuestions(
       questionSettings.admin,
       questionSettings.category,
@@ -71,7 +72,7 @@ io.on("connection", (socket) => {
     //use room settings to request from the trivia API with user input
     async function getQuestions(admin, cat, diff) {
       let retVal;
-      if (cat === 'Video Game'){
+      if (cat === 'Video Games'){
         const url = `https://opentdb.com/api.php?amount=50&category=15&difficulty=${diff.toLowerCase()}`
         const { data } = await axios.get(url);
         if (data.response_code === 1) {
@@ -105,23 +106,24 @@ io.on("connection", (socket) => {
       let correct_answers = retVal.results.map((a) => a.correct_answer);
 
       //send to function to take it turns and emit questions to the front end as accordingly
-      selectQuestions(questions, answers, correct_answers, admin);
+      let scores = GameConfig.getAllUsers(admin).map(a => [admin, a.user, cat, a.score])
+      selectQuestions(questions, answers, correct_answers, admin, scores);
     }
-
     // call function above
 
     const selectQuestions = (
       allQuestions,
       allAnswers,
       correct_answers,
-      admin
+      admin, 
+      scores
     ) => {
       // get length of client
       let numClients = GameConfig.getAllUsers(admin).length;
 
       console.log("clients " + numClients);
       let currentQuestion = 0;
-
+      
       const sendQuestion = () => {
         //check if all clients have answered ten questions
         if (currentQuestion <= numClients * 10 + 1) {
@@ -129,29 +131,42 @@ io.on("connection", (socket) => {
           let question = he.decode(
             JSON.stringify(allQuestions[currentQuestion]).slice(1, -1)
           );
-          let options = allAnswers[currentQuestion];
+          let options = allAnswers[currentQuestion].sort();
 
           //send questions & answers
           socket.emit("question", question);
           socket.emit("options", options);
         } else {
-          socket.emit("quiz ended", roomId);
+          for (let i = 0; i < numClients; i++){
+            let currentUser = GameConfig.getAllUsers(admin)
+            let category = GameConfig.getSettings(admin)
+            Score.create(currentUser[i].user, category.category, currentUser[i].score)
+          }
+            GameConfig.deleteRoom(admin)
+            socket.emit("quiz ended" );
         }
       };
       //send the first question
       sendQuestion();
-
+      
       //listen for answers, move to the next question, call sendQuestion again
       socket.on("answer", (e) => {
+
         //if it is equal to the correct answer
-        if (e === correct_answers[currentQuestion]) {
-          currentQuestion++;
-          sendQuestion();
-          console.log("correct");
+        if (e.userAnswer === correct_answers[currentQuestion]) {
+          // update game config with scores 
+          let users = GameConfig.getAllUsers(e.room)
+          for(let i = 0; i< numClients; i++){
+          
+            if(users[i].user=== e.username){
+              users[i].score++
+              currentQuestion++;
+              sendQuestion();
+            }
+          }
         } else {
-          currentQuestion++;
-          sendQuestion();
-          console.log("wrong");
+              currentQuestion++;
+              sendQuestion();
         }
       });
     };
