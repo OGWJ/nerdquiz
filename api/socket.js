@@ -48,6 +48,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("user exit room", (settings) => {
+    console.log(settings);
     if (settings.admin === settings.username) {
       GameConfig.deleteRoom(settings.admin);
       io.to(settings.admin).emit("quiz ended");
@@ -71,24 +72,22 @@ io.on("connection", (socket) => {
     //use room settings to request from the trivia API with user input
     async function getQuestions(admin, cat, diff) {
       let retVal;
-      if (cat === 'Video Game'){
-        const url = `https://opentdb.com/api.php?amount=50&category=15&difficulty=${diff.toLowerCase()}`
+      if (cat === "Video Game") {
+        const url = `https://opentdb.com/api.php?amount=50&category=15&difficulty=${diff.toLowerCase()}`;
         const { data } = await axios.get(url);
         if (data.response_code === 1) {
           console.log("no questions found");
         }
         retVal = data;
-      }
-      else if (cat === 'Board Games'){
-        const url = `https://opentdb.com/api.php?amount=50&category=16`
+      } else if (cat === "Board Games") {
+        const url = `https://opentdb.com/api.php?amount=50&category=16`;
         const { data } = await axios.get(url);
         if (data.response_code === 1) {
           console.log("no questions found");
         }
         retVal = data;
-      }
-      else{
-        const url = `https://opentdb.com/api.php?amount=50&category=29`
+      } else {
+        const url = `https://opentdb.com/api.php?amount=50&category=29`;
         const { data } = await axios.get(url);
         if (data.response_code === 1) {
           console.log("no questions found");

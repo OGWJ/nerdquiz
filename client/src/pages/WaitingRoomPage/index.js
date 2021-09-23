@@ -66,7 +66,7 @@ const WaitingRoomPage = () => {
   const handleExitRoom = () => {
     // emit user exited room, then
     console.log(game.gameSettings.admin);
-    userExitsRoomHandler(game.gameSettings.admin);
+    userExitsRoomHandler(game.gameSettings.admin, game.username);
     game.setState(GameStateTypes.HOME);
   };
 
