@@ -26,6 +26,21 @@ This is a multiplayer(hopefully) nerd quiz game.
 * [Open Travia DB](https://opentdb.com/)
 
 ## Wins & Challenges
+* WebSocket
+* Turned-base
+* Displaying available rooms correctly on the client-side UI
 
-## Change log
-1. Add readme file
+## Process
+
+#### Project Planning
+
+1. Used user stories to decide what we expect our user would experiece using the app
+2. Designed the theme and the layout of the website
+3. Decided what functions to include in app (Must have, Should have, Could have)
+4. Brokedown the project into smaller tickets
+
+#### Development 
+5. Built front-end pages
+6. Built the backbone of the back-end
+7. Implemented SocketIO
+8. Debugged to make sure the app is stable
