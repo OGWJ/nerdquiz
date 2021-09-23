@@ -24,8 +24,8 @@ const WaitingRoomPage = () => {
 
   useEffect(async () => {
     // Listen for others entering room to update the state
-    socket.on("user enter room", (eventInfo) => {
-      console.log("entering room");
+    socket.on("user entered room", (eventInfo) => {
+      console.log("user entered room");
       console.log(eventInfo.users);
       setPlayers(eventInfo.users);
     });

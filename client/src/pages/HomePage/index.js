@@ -39,12 +39,11 @@ const HomePage = () => {
   // }, []);
 
   const joinRoom = (room) => {
-    userEntersRoomHandler(room.admin, game.username, game.socketId);
     console.log("joined room");
-
     // NOTE: Line below for temporary for development without socket
-    game.setState(GameStateTypes.WAITING_ROOM);
     game.setGameSettings(room);
+    userEntersRoomHandler(room.admin, game.username, game.socketId);
+    game.setState(GameStateTypes.WAITING_ROOM);
   };
   useEffect(async () => {
     socket.on("room list", (allGames) => {
