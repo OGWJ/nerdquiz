@@ -26,8 +26,7 @@ const CreateRoomPage = () => {
   // }, [selectDifficultyColor])
 
   const createRoomHandlerWrapper = (e) => {
-    let settings = createRoomHandler(e, game.username);
-    console.log(settings);
+    let settings = createRoomHandler(e, game.username, game.socketId);
     game.setGameSettings(settings);
     game.setState(GameStateTypes.WAITING_ROOM);
   };

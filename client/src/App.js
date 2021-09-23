@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Header } from "./layout";
+import { socket } from "./service/socket";
 import {
   CreateRoomPage,
   HomePage,
@@ -18,6 +19,12 @@ function App() {
   const [gameSettings, setGameSettings] = useState({});
   const [gameState, setGameState] = useState(GameStateTypes.LANDING);
   const [username, setUsername] = useState("");
+  const [socketId, setSocketId] = useState();
+
+  socket.on("user connects", (Id) => {
+    setSocketId(Id);
+  });
+
   return (
     <div className="vh-100">
       <Header />
@@ -31,7 +38,8 @@ function App() {
                 gameSettings: gameSettings,
                 setGameSettings: setGameSettings,
                 username: username,
-                setUsername: setUsername
+                setUsername: setUsername,
+                socketId: socketId
               }}
             >
               <GamePage />

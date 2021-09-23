@@ -1,8 +1,9 @@
 import { GameConfig } from "../../../api/models/gameConfig";
 import { socket } from "../service/socket";
 
-export const userEntersRoomHandler = (roomId, username) => {
+export const userEntersRoomHandler = (roomId, username, socketId) => {
   let roomSettings = {
+    socketId: socketId,
     username: username,
     roomId: roomId
   };
