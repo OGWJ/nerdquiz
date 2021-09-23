@@ -6,7 +6,7 @@ class GameConfig {
     this.admin = admin;
     this.users = [
       {
-        name: this.roomId,
+        user: this.roomId,
         score: 0
       }
     ];
@@ -36,16 +36,29 @@ class GameConfig {
     console.log(currentGame);
     return currentGame.users;
   }
-  static deleteRoom(roomId){
-    console.log("Deleted Game")
-    GameConfig.gameData = GameConfig.gameData.filter(game => game.roomId !== roomId) 
+  static deleteRoom(roomId) {
+    console.log("Deleted Game");
+    GameConfig.gameData = GameConfig.gameData.filter(
+      (game) => game.roomId !== roomId
+    );
   }
 
-  static removeUser(roomId, user){
-    console.log("Removed User")
-    let currentGame = GameConfig.gameData.find(game => game.roomId === roomId)
-    console.log(currentGame.users)
-    currentGame.users = currentGame.users.filter(player => player.name !== user)
+  static removeUser(roomId, user) {
+    console.log("Removed User");
+    let currentGame = GameConfig.gameData.find(
+      (game) => game.roomId === roomId
+    );
+    console.log(currentGame.users);
+    currentGame.users = currentGame.users.filter(
+      (player) => player.name !== user
+    );
+  }
+
+  static getSettings(roomId) {
+    let currentGame = GameConfig.gameData.find(
+      (game) => game.roomId === roomId
+    );
+    return currentGame;
   }
 }
 
