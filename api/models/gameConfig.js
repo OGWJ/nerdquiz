@@ -4,7 +4,6 @@ class GameConfig {
     this.category = category;
     this.difficulty = difficulty;
     this.admin = admin;
-    this.previousUser = null;
     this.users = [
       {
         socketId: socketId,
@@ -12,9 +11,47 @@ class GameConfig {
         score: 0
       }
     ];
+    this.previousUser = this.users[0];
+    this.questions = {};
+    this.currentQuestionNumber = 0;
     // this.startGame = false;
   }
   static gameData = [];
+
+  static getQuestionsForGame(roomId) {
+    let currentGame = GameConfig.gameData.find(
+      (game) => game.roomId === roomId
+    );
+    if (currentGame) {
+      return currentGame.questions;
+    }
+  }
+
+  static setQuestionsForGame(roomId, questions) {
+    for (let i = 0; i < GameConfig.gameData.length; i++) {
+      if (GameConfig.gameData[i].roomId === roomId) {
+        GameConfig.gameData[i].questions = questions;
+        return;
+      }
+    }
+  }
+
+  static getQuestionNumberForGame(roomId) {
+    for (let i = 0; i < GameConfig.gameData.length; i++) {
+      if (GameConfig.gameData[i].roomId === roomId) {
+        return GameConfig.gameData[i].currentQuestionNumber;
+      }
+    }
+  }
+
+  static incrementQuestionNumberForGame(roomId) {
+    for (let i = 0; i < GameConfig.gameData.length; i++) {
+      if (GameConfig.gameData[i].roomId === roomId) {
+        GameConfig.gameData[i].currentQuestionNumber = GameConfig.gameData[i].currentQuestionNumber + 1;
+        return;
+      }
+    }
+  }
 
   static create(admin, category, difficulty, socketId) {
     const newGame = new GameConfig(
@@ -77,27 +114,28 @@ class GameConfig {
   }
 
   static getUserGoByRoomId(roomId) {
+    console.log('getUserGoByRoomId called')
     let userGo;
-    GameConfig.gameData.forEach((game) => {
-      if (game.roomId === roomId) {
-        console.log(game.getUsersGo());
-        userGo = game.getUsersGo();
-        return;
+    for (let i = 0; i < GameConfig.gameData.length; i++) {
+      if (GameConfig.gameData[i].roomId === roomId) {
+        // console.log('get users go', GameConfig.gameData[i].getUsersGo());
+        userGo = GameConfig.gameData[i].getUsersGo();
+        return userGo;
       }
-    });
+    }
     return userGo;
   }
 
   getUsersGo() {
-    if (
-      !this.previousUser ||
-      this.users.indexOf(this.previousUser === this.users.length - 1)
-    ) {
-      console.log(this.users[0].user);
-      return this.users[0].user;
+    let retval;
+    console.log('getUsersGo called:', this.users.indexOf(this.previousUser));
+    if (this.users.indexOf(this.previousUser) === this.users.length - 1) {
+      retval = this.users[0];
+    } else {
+      retval = this.users[this.users.indexOf(this.previousUser) + 1];
     }
-    console.log(this.users[this.users.indexOf(this.previousUser) + 1].user);
-    return this.users[this.users.indexOf(this.previousUser) + 1].user;
+    this.previousUser = retval;
+    return retval.user;
   }
 }
 

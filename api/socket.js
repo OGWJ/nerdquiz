@@ -64,111 +64,124 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("user starts quiz", (roomId) => {
-    console.log(`User ${socket.id} clicked start quiz`);
 
-    io.to(roomId).emit("user started quiz");
+  // ~~~~~~ GET QUESTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+  async function getQuestions(admin, cat, diff) {
+    let resp;
+    if (cat === "Video Game") {
+      const url = `https://opentdb.com/api.php?amount=50&category=15&difficulty=${diff.toLowerCase()}`;
+      const { data } = await axios.get(url);
+      if (data.response_code === 1) {
+        console.log("no questions found");
+      }
+      retVal = data;
+    } else if (cat === "Board Games") {
+      const url = `https://opentdb.com/api.php?amount=50&category=16`;
+      const { data } = await axios.get(url);
+      if (data.response_code === 1) {
+        console.log("no questions found");
+      }
+      resp = data;
+    } else {
+      const url = `https://opentdb.com/api.php?amount=50&category=29`;
+      const { data } = await axios.get(url);
+      if (data.response_code === 1) {
+        console.log("no questions found");
+      }
+      resp = data;
+    }
+
+    //set q&a's
+    let questions = resp.results.map((q) => q.question);
+    let answers = resp.results.map((a) => [
+      a.correct_answer,
+      ...a.incorrect_answers
+    ]);
+    let correct_answers = resp.results.map((a) => a.correct_answer);
+
+    return { questions, answers, correct_answers }
+  }
+
+  const sendQuestion = (admin) => {
+    let numClients = GameConfig.getAllUsers(admin).length;
+    let currentQuestion = GameConfig.getQuestionNumberForGame(admin);
+    //check if all clients have answered ten questions
+    if (currentQuestion <= numClients * 10 + 1) {
+      //decode from HTML special characters, remove the quotation marks,
+      let question = GameConfig.getQuestionsForGame(admin)
+      console.log(question)
+      question = he.decode(
+        JSON.stringify(question.questions[currentQuestion]).slice(1, -1)
+      );
+      // let options = questionInfo.allAnswers[currentQuestion];
+      let options = GameConfig.getQuestionsForGame(admin).answers[currentQuestion];
+
+      let userTurnConfig = GameConfig.getUserGoByRoomId(admin);
+      //send questions & answers
+      // io.to(roomId).emit("question", question);
+      // io.to(roomId).emit("options", options);
+      let questionInfo = {
+        questions: question,
+        options: options,
+        userTurn: userTurnConfig
+      };
+      // console.log(questionInfo.options)
+      io.to(admin).emit("question", questionInfo);
+    } else {
+      io.to(admin).emit("quiz ended", admin);
+    }
+  };
+
+  // SET MODEL CURRENT QUESTION
+  // SET MODEL QUESTIONS
+
+
+  // GETTER 
+
+  socket.on("answer", (e) => {
+    console.log('received answer!', e.admin)
+    console.log(e);
+    let currentQuestion = GameConfig.getQuestionNumberForGame(e.admin);
+    let allQuestions = GameConfig.getQuestionsForGame(e.admin);
+    let correct_answer = allQuestions.correct_answers[currentQuestion];
+    if (e === correct_answer) {
+      GameConfig.incrementQuestionNumberForGame(e.admin);
+      // currentQuestion++;
+      sendQuestion(e.admin);
+      console.log("correct");
+    } else {
+      // currentQuestion++;
+      GameConfig.incrementQuestionNumberForGame(e.admin);
+      sendQuestion(e.admin);
+      console.log("wrong");
+    }
+  })
+
+  socket.on("user starts quiz", async (roomId) => {
+    // console.log(`User ${socket.id} clicked start quiz`);
+
     let questionSettings = GameConfig.getSettings(roomId);
-    getQuestions(
+    const questions = await getQuestions(
       questionSettings.admin,
       questionSettings.category,
       questionSettings.difficulty
     );
+    // console.log(questions);
+    GameConfig.setQuestionsForGame(roomId, questions)
+    sendQuestion(roomId)
 
-    //use room settings to request from the trivia API with user input
-    async function getQuestions(admin, cat, diff) {
-      let retVal;
-      if (cat === "Video Game") {
-        const url = `https://opentdb.com/api.php?amount=50&category=15&difficulty=${diff.toLowerCase()}`;
-        const { data } = await axios.get(url);
-        if (data.response_code === 1) {
-          console.log("no questions found");
-        }
-        retVal = data;
-      } else if (cat === "Board Games") {
-        const url = `https://opentdb.com/api.php?amount=50&category=16`;
-        const { data } = await axios.get(url);
-        if (data.response_code === 1) {
-          console.log("no questions found");
-        }
-        retVal = data;
-      } else {
-        const url = `https://opentdb.com/api.php?amount=50&category=29`;
-        const { data } = await axios.get(url);
-        if (data.response_code === 1) {
-          console.log("no questions found");
-        }
-        retVal = data;
-      }
+    io.to(roomId).emit("user started quiz");
+  })
 
-      //set q&a's
-      let questions = retVal.results.map((q) => q.question);
-      let answers = retVal.results.map((a) => [
-        a.correct_answer,
-        ...a.incorrect_answers
-      ]);
-      let correct_answers = retVal.results.map((a) => a.correct_answer);
 
-      //send to function to take it turns and emit questions to the front end as accordingly
-      selectQuestions(questions, answers, correct_answers, admin);
-    }
+  //use room settings to request from the trivia API with user input
 
-    // call function above
+  // call function above
 
-    const selectQuestions = (
-      allQuestions,
-      allAnswers,
-      correct_answers,
-      admin
-    ) => {
-      // get length of client
-      let numClients = GameConfig.getAllUsers(admin).length;
+  //send the first question
 
-      console.log("clients " + numClients);
-      let currentQuestion = 0;
+  //listen for answers, move to the next question, call sendQuestion again
 
-      const sendQuestion = () => {
-        //check if all clients have answered ten questions
-        if (currentQuestion <= numClients * 10 + 1) {
-          //decode from HTML special characters, remove the quotation marks,
-          let question = he.decode(
-            JSON.stringify(allQuestions[currentQuestion]).slice(1, -1)
-          );
-          let options = allAnswers[currentQuestion];
-
-          let userTurnConfig = GameConfig.getUserGoByRoomId(roomId);
-          console.log("userTurnConfig", userTurnConfig);
-          //send questions & answers
-          // io.to(roomId).emit("question", question);
-          // io.to(roomId).emit("options", options);
-          let questionInfo = {
-            questions: question,
-            options: options,
-            userTurn: userTurnConfig
-          };
-          io.to(roomId).emit("question", questionInfo);
-        } else {
-          io.to(roomId).emit("quiz ended", roomId);
-        }
-      };
-      //send the first question
-      sendQuestion();
-
-      //listen for answers, move to the next question, call sendQuestion again
-      socket.on("answer", (e) => {
-        //if it is equal to the correct answer
-        if (e === correct_answers[currentQuestion]) {
-          currentQuestion++;
-          sendQuestion();
-          console.log("correct");
-        } else {
-          currentQuestion++;
-          sendQuestion();
-          console.log("wrong");
-        }
-      });
-    };
-  });
 
   //socket.on("user answer", (username, question, answer) => {
   //   io.to(roomSettings.admin)("user answer", username, question);

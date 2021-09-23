@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import { userExitsRoomHandler } from "../../handlers/userRoomInteractionHandlers";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import { socket } from "../../service/socket";
+import useInterval from 'react-useinterval';
 
 import "./style.css";
 
@@ -15,52 +16,74 @@ const QuizPage = () => {
   // temporary hardcoding of count
   const [count, setCount] = useState(10);
 
-  const startSimulateClock = () => {
-    let localCount = count;
-    let clock = setInterval(() => {
-      // use clearInterval(clock) to stop this from somewhere else
-      // console.log(game.getState);
-      // if (game.getState != GameStateTypes.QUIZ) return;
-      localCount--;
-      console.log(localCount);
+  const sendNullAnswer = () => {
+    console.log('sent null answer')
+    socket.emit("answer", { admin: game.gameSettings.admin });
+  }
 
-      //if the timer is 0 it should move to the next question
-      if (localCount === 0 && isUserTurn) {
-        console.log(userTurn);
-        let ans = "null";
-        socket.emit("answer", ans);
+  const decreaseCount = () => {
+    if (count < 1) {
+      setCount(10);
+      if (isUserTurn) {
+        console.log(isUserTurn);
+        sendNullAnswer()
       }
+    } else {
+      setCount(prev => prev - 1);
+    }
 
-      // issue here with count and local value in interval loop
-      // maybe clear interval at end, update value and recursively call
-
-      if (localCount > 0) {
-        setCount((prev) => prev - 1);
-      }
-
-      if (localCount < 1) {
-        // setIsUserTurn((prev) => !prev);
-        setCount(10);
-        localCount = 10;
-      }
-    }, 1000);
-
-    socket.on("quiz ended", (roomId) => {
-      clearInterval(clock);
-      clock = 0;
-      localCount = 0;
-      game.setState(GameStateTypes.QUIZ_FINISHED);
-    });
   };
 
-  // should handle component unmount with useEffect cleanup
-  useEffect(() => {
-    startSimulateClock();
-  }, []);
+  useInterval(decreaseCount, 1000);
+
+  // useEffect(() => {
+  //   let interval;
+  //   if (count) {
+  //     interval = setInterval(() => {
+  //       if (count < 1) {
+  //         setCount(10)
+  //       } else {
+  //         setCount(prev => prev - 1);
+  //       }
+  //       console.log(count);
+  //     }, 1000);
+  //   } else {
+  //     clearInterval(interval);
+  //   }
+
+  // let clock = setInterval(() => {
+  //   // use clearInterval(clock) to stop this from somewhere else
+  //   // console.log(game.getState);
+  //   // if (game.getState != GameStateTypes.QUIZ) return;
+  //   localCount--;
+  //   console.log(localCount);
+
+  //   //if the timer is 0 it should move to the next question
+  //   if (localCount === 0 && isUserTurn) {
+  //     console.log(userTurn);
+  //     let ans = "null";
+  //     socket.emit("answer", ans);
+  //   }
+
+  //   // issue here with count and local value in interval loop
+  //   // maybe clear interval at end, update value and recursively call
+
+  //   if (localCount > 0) {
+  //     setCount((prev) => prev - 1);
+  //   }
+
+  //   if (localCount < 1) {
+  //     // setIsUserTurn((prev) => !prev);
+  //     setCount(10);
+  //     localCount = 10;
+  //   }
+  // }, 1000);
+
+  // }, [count]);
 
   const submitAnswer = (e) => {
     // stub
-    socket.emit("answer", e);
+    socket.emit("answer", { ...e, admin: game.gameSettings.admin });
     console.log(e);
     setIsUserTurn(false);
     setCount(10);
@@ -81,8 +104,12 @@ const QuizPage = () => {
 
   useEffect(async () => {
     // add socket to update clock
-    socket.on("countdown", (secondsRemaining) => {
-      setCount(secondsRemaining);
+    // socket.on("countdown", (secondsRemaining) => {
+    //   setCount(secondsRemaining);
+    // });
+    socket.on("quiz ended", (roomId) => {
+      clearInterval(clock);
+      game.setState(GameStateTypes.QUIZ_FINISHED);
     });
   }, []);
 
