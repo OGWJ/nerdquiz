@@ -1,20 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
 import { socket } from "../../service/socket";
 import { userStartsQuizHandler } from "../../handlers/userRoomInteractionHandlers";
-import './style.css';
+import "./style.css";
 import { GameContext, GameStateTypes } from "../../models/GameStateTypes";
 import { userExitsRoomHandler } from "../../handlers/userRoomInteractionHandlers";
 
-
 const getPlayersInRoom = async () => {
   // return await fetch()
-  return ['Bob', 'Sal', 'Phil'];
-}
+  return ["Bob", "Sal", "Phil"];
+};
 
 const WaitingRoomPage = () => {
-
   const game = useContext(GameContext);
-  const [players, setPlayers] = useState(['']);
+  const [players, setPlayers] = useState([{ user: game.admin }]);
   // useEffect(async () => {
   //   // temp
   //   // will be roomId = game.roomId;
@@ -26,58 +24,70 @@ const WaitingRoomPage = () => {
 
   useEffect(async () => {
     // Listen for others entering room to update the state
-    socket.on('user enter room', eventInfo => {
-      console.log("entering room")
-      console.log(eventInfo)
-      setPlayers(prev => prev + eventInfo.username);
-      
-    })
-  }, [])
+    socket.on("user enter room", (eventInfo) => {
+      console.log("entering room");
+      console.log(eventInfo.users);
+      setPlayers(eventInfo.users);
+    });
+  }, []);
 
   useEffect(async () => {
     // Listen for other leaving room to update the state
-    socket.on('user exits room', eventInfo => {
-      setPlayers(prev => prev.filter(player => player != eventInfo.username));
-    })
+    socket.on("user exit room", (eventInfo) => {
+      console.log("user exit room");
+      setPlayers((prev) => {
+        prev.filter((player) => player.user != eventInfo.user);
+      });
+    });
 
-    socket.on('user started quiz', () => {
+    socket.on("user started quiz", () => {
       game.setState(GameStateTypes.QUIZ);
-    })
-  }, [])
+    });
+  }, []);
 
   // TODO create color generation stuff
 
-  const isUsersRoom = () => localStorage.getItem("username") == game.gameSettings.admin ? true : false;
+  const isUsersRoom = () =>
+    localStorage.getItem("username") == game.gameSettings.admin ? true : false;
 
   const handleStuff = () => {
     const roomId = game.gameSettings.admin;
     userStartsQuizHandler(roomId);
     // temp below
     game.setState(GameStateTypes.QUIZ);
-  }
+  };
 
   const handleExitRoom = () => {
     // emit user exited room, then
-    userExitsRoomHandler(game.gameSettings.admin)
+    userExitsRoomHandler(game.gameSettings.admin);
     game.setState(GameStateTypes.HOME);
-  }
+  };
 
   return (
-    <div className='p-nav'>
+    <div className="p-nav">
       <button onClick={handleExitRoom}>Exit room</button>
-      <h3 className='pt-4 px-4'>{game.gameSettings.admin}'s Room</h3>
-      <h5 className='px-4'><small>Category is</small> <em>{game.gameSettings.category}</em></h5>
-      <h5 className='px-4'><small>Difficulty is</small> <em>{game.gameSettings.difficulty}</em></h5>
+      <h3 className="pt-4 px-4">{game.gameSettings.admin}'s Room</h3>
+      <h5 className="px-4">
+        <small>Category is</small> <em>{game.gameSettings.category}</em>
+      </h5>
+      <h5 className="px-4">
+        <small>Difficulty is</small> <em>{game.gameSettings.difficulty}</em>
+      </h5>
       <ul>
-        {
-          players.map(player => {
-            return (<li className='card user-card text-center d-flex flex-column justify-content-center my-3'
-              style={{ backgroundColor: '#4e4d83', color: '#ffffff' }}>{player}</li>);
-          })
-        }
+        {players &&
+          players.map((player) => {
+            return (
+              <li
+                className="card user-card text-center d-flex flex-column justify-content-center my-3"
+                style={{ backgroundColor: "#4e4d83", color: "#ffffff" }}
+              >
+                {player.user}
+              </li>
+            );
+          })}
       </ul>
       {isUsersRoom ? <button onClick={handleStuff}>Start Quiz</button> : null}
-    </div >
+    </div>
   );
 };
 
