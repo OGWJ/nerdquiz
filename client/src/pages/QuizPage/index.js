@@ -89,7 +89,7 @@ const QuizPage = () => {
 
   const submitAnswer = (e) => {
     // stub
-    socket.emit("answer", { ...e, admin: game.gameSettings.admin });
+    socket.emit("answer", { ...e, username: game.username, admin: game.gameSettings.admin });
     setIsUserTurn(false);
     setCount(10);
 
@@ -120,7 +120,7 @@ const QuizPage = () => {
 
   useEffect(async () => {
     socket.on("question", (questionInfo) => {
-      console.log(questionInfo);
+      setCount(10);
       setQuestion(questionInfo.questions);
       setOptions(questionInfo.options);
       setIsUserTurn(game.username === questionInfo.userTurn ? true : false);
