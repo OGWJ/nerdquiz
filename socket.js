@@ -4,8 +4,7 @@ const { Score } = require("./models/score");
 const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
-  cors: { origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] },
-  transports: ['polling']
+  cors: { origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }
 });
 const he = require("he");
 const port = 5001;
