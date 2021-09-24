@@ -75,15 +75,20 @@ const HomePage = () => {
 
   return (
     <div className="container mt-4 p-nav">
-      <h3 className="m-4">Welcome {game.username}</h3>
-      <div className="container d-flex justify-content-center">
+      <div className="d-flex justify-content-center">
+        <h3 className="m-4">Welcome {game.username}</h3>
+      </div>
+
+      <div className="d-flex justify-content-center">
         <button className="btn btn-secondary" onClick={handleCreateRoom}>
           Create a Room
         </button>
       </div>
+
+      <div className="container d-flex justify-content-center">
+        <div className="w-100" style={{maxWidth: '600px'}}>
       <ul className="container">
         <h3 className="mt-4">Join a Room</h3>
-
         {rooms.map((room) => {
           return (
             <li
@@ -101,6 +106,8 @@ const HomePage = () => {
           );
         })}
       </ul>
+      </div>
+    </div>
     </div>
   );
 };
