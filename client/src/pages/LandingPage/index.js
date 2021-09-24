@@ -27,7 +27,8 @@ const LandingPage = () => {
             autoFocus
             required
           />
-          <input type="submit" />
+          <br/>
+          <input type="submit" value="let's go!" className="btn btn-success my-3"/>
         </form>
       </div>
     </div>
