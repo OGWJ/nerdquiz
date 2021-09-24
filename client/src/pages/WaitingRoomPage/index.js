@@ -71,15 +71,18 @@ const WaitingRoomPage = () => {
   };
 
   return (
-    <div className="p-nav">
-      <button onClick={handleExitRoom}>Exit room</button>
-      <h3 className="pt-4 px-4">{game.gameSettings.admin}'s Room</h3>
-      <h5 className="px-4">
-        <small>Category is</small> <em>{game.gameSettings.category}</em>
-      </h5>
-      <h5 className="px-4">
-        <small>Difficulty is</small> <em>{game.gameSettings.difficulty}</em>
-      </h5>
+
+    <div className='container row vw-100 p-nav d-flex justify-content-center'>
+      <div className='container col-sm'>
+        <h3 className='pt-4'>{game.gameSettings.admin}'s Room</h3>
+        <h5 className=''><small>Category is</small> <em>{game.gameSettings.category}</em></h5>
+        <h5 className=''><small>Difficulty is</small> <em>{game.gameSettings.difficulty}</em></h5>
+        <div className='container d-flex justify-content-center'>
+          <button onClick={handleStuff} className='btn btn-success m-3'>Start Quiz</button>
+          <button onClick={handleExitRoom} className='btn btn-danger m-3'>Exit room</button>
+        </div>
+      </div>
+      <div className='col-sm'>
       <ul>
         {players &&
           players.map((player) => {
@@ -93,7 +96,7 @@ const WaitingRoomPage = () => {
             );
           })}
       </ul>
-      {isUsersRoom ? <button onClick={handleStuff}>Start Quiz</button> : null}
+      </div>
     </div>
   );
 };
