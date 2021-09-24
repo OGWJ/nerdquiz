@@ -88,7 +88,7 @@ const WaitingRoomPage = () => {
                 className="card user-card text-center d-flex flex-column justify-content-center my-3"
                 style={{ backgroundColor: "#4e4d83", color: "#ffffff" }}
               >
-                {player.user}
+                {player.user == game.username ? `${player.user} (you)`: player.user}
               </li>
             );
           })}
