@@ -18,12 +18,15 @@ This is a multiplayer(hopefully) nerd quiz game.
 
 * HTML/CSS
 * JavaScript
+* [Bootstrap](https://getbootstrap.com/)
 * [React](https://reactjs.org/)
 * [Express](https://expressjs.com/)
 * [PostgreSQL](https://www.postgresql.org/)
 * [SocketIO](https://socket.io/)
 * [React Testing Library](https://testing-library.com/)
 * [Open Travia DB](https://opentdb.com/)
+* [Netlify](https://www.netlify.com/)
+* [Heroku](https://www.heroku.com/)
 
 ## Wins & Challenges
 * WebSocket
@@ -44,6 +47,7 @@ This is a multiplayer(hopefully) nerd quiz game.
 6. Built the backbone of the back-end
 7. Implemented SocketIO
 8. Debugged to make sure the app is stable
+9. Deployed the front-end to Netlify and the back-end to Heroku
 
 ## Licence
 * [Licence](https://opensource.org/licenses/mit-license.php)
