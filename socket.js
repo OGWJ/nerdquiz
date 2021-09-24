@@ -7,8 +7,9 @@ const io = require("socket.io")(server, {
   cors: { origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }
 });
 const he = require("he");
-
 const port = 5001;
+scoreRoutes = require("./routes/scores");
+server.use("/scores", scoreRoutes);
 
 server.listen(port, () => {
   GameConfig.create("jessica", "board games", "hard");
