@@ -80,8 +80,8 @@ const HomePage = () => {
       </div>
 
       <div className="d-flex justify-content-center">
-        <button className="btn btn-secondary" onClick={handleCreateRoom}>
-          Create a Room
+        <button id='create-room-btn' className="btn btn-primary" onClick={handleCreateRoom}>
+          <h3>Create a Room</h3>
         </button>
       </div>
 
@@ -92,16 +92,16 @@ const HomePage = () => {
         {rooms.map((room) => {
           return (
             <li
-              className="card text-center my-3 p-3"
+              className="card room-card text-center my-3 p-3"
               style={{
                 backgroundColor: getCardColors("EASY").bg,
                 color: getCardColors("EASY").fg
               }}
+              onClick={(e) => joinRoom(room)}
             >
               <h3>{room.admin}'s Room</h3>
               <span>{room.category}</span>
               <span>{room.difficulty}</span>
-              <button onClick={(e) => joinRoom(room)}>Join</button>
             </li>
           );
         })}

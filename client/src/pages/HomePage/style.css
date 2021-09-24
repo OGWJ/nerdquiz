@@ -10,3 +10,12 @@
     transform: translate(-5px, -5px);
     box-shadow: 4px 8px #ea323d;
 }
+
+.room-card {
+    cursor: pointer;
+}
+
+#create-room-btn {
+    min-width: 300px;
+    min-height: 100px;
+}

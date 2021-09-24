@@ -71,7 +71,6 @@ const WaitingRoomPage = () => {
   };
 
   return (
-
     <div className='container row vw-100 p-nav d-flex justify-content-center'>
       <div className='container col-sm'>
         <h3 className='pt-4'>{game.gameSettings.admin}'s Room</h3>
