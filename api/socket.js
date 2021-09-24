@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
     
     if (settings.admin === settings.username) {
       
-      io.to(settings.admin).emit("quiz ended");
+      io.to(settings.admin).emit("quiz ended early");
     } else {
       GameConfig.removeUser(settings.admin, settings.username);
       io.to(settings.admin).emit("user exited room", { user: settings.username });
@@ -106,7 +106,7 @@ io.on("connection", (socket) => {
     let numClients = GameConfig.getAllUsers(admin).length;
     let currentQuestion = GameConfig.getQuestionNumberForGame(admin);
     //check if all clients have answered ten questions
-    if (currentQuestion <= numClients * 10 + 1) {
+    if (currentQuestion <= numClients * 10) {
       //decode from HTML special characters, remove the quotation marks,
       let question = GameConfig.getQuestionsForGame(admin)
      
@@ -135,9 +135,11 @@ io.on("connection", (socket) => {
         let settings = GameConfig.getUserScores(player, admin)
         Score.create(settings.username, settings.genre, settings.score)
       }
-      let gameScores = {...GameConfig.getGameScores(admin), admin: admin}
+      let gameScores = GameConfig.getGameScores(admin)
       GameConfig.deleteRoom(admin)
-      io.to(admin).emit("quiz ended", gameScores);
+      console.log("game", gameScores)
+      io.to(admin).emit("quiz finished", gameScores );
+      
     }
   };
 

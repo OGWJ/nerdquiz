@@ -13,7 +13,7 @@ class GameConfig {
     ];
     this.previousUser = this.users[0];
     this.questions = {};
-    this.currentQuestionNumber = 0;
+    this.currentQuestionNumber = 1;
     // this.startGame = false;
   }
   static gameData = [];
@@ -102,10 +102,11 @@ class GameConfig {
   static getGameScores(roomId){
     let all = GameConfig.gameData.find((game) => game.roomId === roomId)
     let scores = (all.users)
-    console.log(scores)
+    scores = scores.sort((a,b) => b.score - a.score)
+    console.log("scores", scores)
     //let info = {user: user, score: all.users.user.score}
     
-    return scores;
+    return (scores);
   }
 
   static updateUserScore(user, roomId){

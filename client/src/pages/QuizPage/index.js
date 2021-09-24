@@ -33,11 +33,10 @@ const QuizPage = () => {
     }
   }
 
-  socket.on("quiz ended", () => {
-    clearInterval(clock);
-    clock = 0;
-    localCount = 0;
+  socket.once("quiz finished",(gameScores) => { 
+    game.setScores(gameScores) 
     game.setState(GameStateTypes.QUIZ_FINISHED);
+    
   });
 
   useInterval(decreaseCount, 1000);
@@ -107,22 +106,23 @@ const QuizPage = () => {
   //   });
   // }, []);
 
-  useEffect(async () => {
-    // add socket to update clock
-    // socket.on("countdown", (secondsRemaining) => {
-    //   setCount(secondsRemaining);
-    // });
-    socket.on("quiz ended", (roomId) => {
-      clearInterval(clock);
-      game.setState(GameStateTypes.QUIZ_FINISHED);
-    });
-  }, []);
+  // useEffect(async () => {
+  //   // add socket to update clock
+  //   // socket.on("countdown", (secondsRemaining) => {
+  //   //   setCount(secondsRemaining);
+  //   // });
+  //   socket.on("quiz ended", (roomId) => {
+      
+  //     game.setState(GameStateTypes.QUIZ_FINISHED);
+  //   });
+  // }, []);
 
   useEffect(async () => {
     socket.on("question", (questionInfo) => {
       setCount(10);
       setQuestion(questionInfo.questions);
       setOptions(questionInfo.options);
+      console.log(questionInfo.userTurn)
       setIsUserTurn(game.username === questionInfo.userTurn ? true : false);
     });
   }, []);

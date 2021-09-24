@@ -20,6 +20,7 @@ function App() {
   const [gameState, setGameState] = useState(GameStateTypes.LANDING);
   const [username, setUsername] = useState("");
   const [socketId, setSocketId] = useState();
+  const [scores, setScores] = useState({})
 
   socket.on("user connects", (Id) => {
     setSocketId(Id);
@@ -39,7 +40,9 @@ function App() {
                 setGameSettings: setGameSettings,
                 username: username,
                 setUsername: setUsername,
-                socketId: socketId
+                socketId: socketId,
+                scores: scores,
+                setScores: setScores
               }}
             >
               <GamePage />

@@ -29,19 +29,22 @@ class Score {
       try {
         let currentUser = await db.query(
         `SELECT username FROM scores WHERE username = $1;`,[username]);
-        if(currentUser.rows[0].username !== username){
+        
+        if(currentUser.rows.length > 1){
           let result = await db.query(
-          `INSERT INTO scores (username, genre, score) VALUES ($1, $2, $3)  RETURNING *;`,
-          [username, genre, score]);
-          console.log("added", result.rows[0])
-          let newScore = new Score(result.rows[0]);
-          res(newScore);
+            `UPDATE scores SET score = $2 WHERE score < $2 AND username = $1 RETURNING *;`,
+            [username, score]);
+            let newScore = await db.query(`SELECT * FROM scores WHERE username = $1`,[username])
+            console.log("update", newScore)
+            res(result);
         } else {
           let result = await db.query(
-          `UPDATE scores SET score = $2 WHERE score < $2 AND username = $1 RETURNING *;`,
-          [username, score]);
-          console.log("update", result.rows)
-          res(result);
+            `INSERT INTO scores (username, genre, score) VALUES ($1, $2, $3)  RETURNING *;`,
+            [username, genre, score]);
+            console.log("added", result.rows[0])
+            let newScore = new Score(result.rows[0]);
+            res(newScore);
+         
         }
       }
       catch (err) {

@@ -18,13 +18,13 @@ async function show(req, res) {
   }
 }
 
-async function create(req, res) {
-  try {
-    const score = await Score.create(req.body);
-    res.status(201).json(score);
-  } catch (err) {
-    res.status(422).json({ err });
-  }
-}
+// async function create(req, res) {
+//   try {
+//     const score = await Score.create(req.body);
+//     res.status(201).json(score);
+//   } catch (err) {
+//     res.status(422).json({ err });
+//   }
+// }
 
 module.exports = { index, create, show };
