@@ -25,6 +25,7 @@ const LandingPage = () => {
             id="username-input"
             placeholder="Enter your username"
             autoFocus
+            required
           />
           <input type="submit" />
         </form>

@@ -33,10 +33,10 @@ const QuizPage = () => {
     }
   }
 
-  socket.once("quiz finished",(gameScores) => { 
-    game.setScores(gameScores) 
+  socket.once("quiz finished",(gameScores) => {
+    game.setScores(gameScores)
     game.setState(GameStateTypes.QUIZ_FINISHED);
-    
+
   });
 
   useInterval(decreaseCount, 1000);
@@ -112,7 +112,7 @@ const QuizPage = () => {
   //   //   setCount(secondsRemaining);
   //   // });
   //   socket.on("quiz ended", (roomId) => {
-      
+
   //     game.setState(GameStateTypes.QUIZ_FINISHED);
   //   });
   // }, []);
@@ -144,6 +144,7 @@ const QuizPage = () => {
     <div className="container p-nav">
       <button onClick={exitHandler}>Exit Quiz</button>
       <div className="container d-flex flex-column text-center">
+      { isUserTurn ? <p>Its your turn!</p> : <p>Its {}\'s turn</p> }
         <h3>Question is: {question}</h3>
         <h4>
           {count} {count === 1 ? "second" : "seconds"} remaining...
