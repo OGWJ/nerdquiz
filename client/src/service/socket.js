@@ -1,3 +1,3 @@
-import io from 'socket.io-client';
-const SOCKET_URL = 'http://localhost:5001'
+import io from "socket.io-client";
+const SOCKET_URL = "https://something-stupid-api.herokuapp.com/";
 export const socket = io.connect(SOCKET_URL);
