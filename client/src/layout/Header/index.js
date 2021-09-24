@@ -7,18 +7,26 @@ const Header = () => {
   let navLink;
 
   if (location.pathname === "/leaderboard") {
-    navLink = <NavLink activeClassName="home-link" to="/">Play Again</NavLink>;
+    navLink = (
+      <NavLink activeClassName="home-link" to="/">
+        Play Again
+      </NavLink>
+    );
   } else {
-    navLink = <NavLink activeClassName="active" to="/leaderboard">Leaderboard</NavLink>;
-    //  navLink = <a href="http://localhost:8080/leaderboard">Leaderboard</a>; 
+    navLink = (
+      <NavLink activeClassName="active" to="/leaderboard">
+        Leaderboard
+      </NavLink>
+    );
+    //  navLink = <a href="http://localhost:8080/leaderboard">Leaderboard</a>;
   }
 
   return (
     <nav className="navbar fixed-top">
       <div className="container-fluid">
         <div className="navbar-header">
-          <NavLink to='' className="navbar-brand">
-            Nerd Quiz
+          <NavLink to="" className="navbar-brand">
+            NERD IT THROUGH THE GRAPEVINE
           </NavLink>
         </div>
         <ul className="nav navbar-nav navbar-right">
