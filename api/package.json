@@ -2,10 +2,10 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "socket.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node socket.js",
+    "dev": "nodemon socket.js",
     "seedDev": "node dbConfig/seedDev.js",
     "test": "jest --setupFiles ./tests/integration/config.js --verbose",
     "coverage": "jest --setupFiles ./tests/integration/config.js --coverage --verbose"
@@ -14,8 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "he": "^1.2.0",
     "pg": "^8.7.1",
     "socket.io": "^4.2.0"
   },

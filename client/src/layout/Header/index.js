@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import "./style.css";
 
 const Header = () => {
@@ -7,26 +7,33 @@ const Header = () => {
   let navLink;
 
   if (location.pathname === "/leaderboard") {
-    navLink = <a href="http://localhost:8080">Back to Home</a>;
+    navLink = (
+      <NavLink activeClassName="home-link" to="/">
+        Play Again
+      </NavLink>
+    );
   } else {
-    navLink = <a href="http://localhost:8080/leaderboard">Leaderboard</a>;
+    navLink = (
+      <NavLink activeClassName="active" to="/leaderboard">
+        Leaderboard
+      </NavLink>
+    );
+    //  navLink = <a href="http://localhost:8080/leaderboard">Leaderboard</a>;
   }
 
   return (
-    <div>
-      <nav className="navbar navbar-inverse">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="#">
-              Nerd Quiz
-            </a>
-          </div>
-          <ul className="nav navbar-nav navbar-right">
-            <li>{navLink}</li>
-          </ul>
+    <nav className="navbar fixed-top">
+      <div className="container-fluid">
+        <div className="navbar-header">
+          <NavLink to="" className="navbar-brand">
+            NERD IT THROUGH THE GRAPEVINE
+          </NavLink>
         </div>
-      </nav>
-    </div>
+        <ul className="nav navbar-nav navbar-right">
+          <li>{navLink}</li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 

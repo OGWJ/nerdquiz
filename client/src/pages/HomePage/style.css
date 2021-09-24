@@ -1,0 +1,21 @@
+.p-nav {
+    padding-top: 22px;
+}
+
+.card {
+    transition: 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 4px 8px #ea323d;
+}
+
+.room-card {
+    cursor: pointer;
+}
+
+#create-room-btn {
+    min-width: 300px;
+    min-height: 100px;
+}
