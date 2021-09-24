@@ -9,14 +9,19 @@ class Score {
   }
 
   static get all() {
+        console.log('all')
     return new Promise(async (res, rej) => {
       try {
-        let result = await db.query(
-          `SELECT * FROM scores ORDER BY score DESC LIMIT 10;`
-        );
-        let scores = result.rows.map((r) => new Score(r));
-        res(scores);
+        // console.log('score.all', await db.query(`SELECT * FROM scores;`));
+        console.log('inside try block')
+        let result = await db.query(`SELECT * FROM scores;`);
+        // let scores = result.rows.map((r) => new Score(r));
+        // res(scores);
+        console.log('result', result);
+        
+        res(result);
       } catch (err) {
+        console.log(err);
         rej(`Error retrieving scores: ${err}`);
       }
     });

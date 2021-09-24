@@ -2,9 +2,9 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "socket.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node socket.js",
     "dev": "nodemon socket.js",
     "seedDev": "node dbConfig/seedDev.js",
     "test": "jest --setupFiles ./tests/integration/config.js --verbose",
