@@ -15,6 +15,7 @@ const QuizPage = () => {
   const [options, setOptions] = useState(["A", "B", "C"]);
   // temporary hardcoding of count
   const [count, setCount] = useState(10);
+  const [userTurn, setUserTurn] = useState();
 
   const sendNullAnswer = () => {
     console.log('sent null answer')
@@ -122,6 +123,7 @@ const QuizPage = () => {
       setCount(10);
       setQuestion(questionInfo.questions);
       setOptions(questionInfo.options);
+      setUserTurn(questionInfo.userTurn);
       console.log(questionInfo.userTurn)
       setIsUserTurn(game.username === questionInfo.userTurn ? true : false);
     });
@@ -144,7 +146,7 @@ const QuizPage = () => {
     <div className="container p-nav">
       <button onClick={exitHandler}>Exit Quiz</button>
       <div className="container d-flex flex-column text-center">
-      { isUserTurn ? <p>Its your turn!</p> : <p>Its {}\'s turn</p> }
+      { isUserTurn ? <p>Its your turn, {game.username}!</p> : <p>Its {userTurn}'s turn</p> }
         <h3>Question is: {question}</h3>
         <h4>
           {count} {count === 1 ? "second" : "seconds"} remaining...
