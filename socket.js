@@ -54,9 +54,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("user exit room", (settings) => {
-    
+
     if (settings.admin === settings.username) {
-      
+
       io.to(settings.admin).emit("quiz ended");
     } else {
       GameConfig.removeUser(settings.admin, settings.username);
@@ -109,7 +109,7 @@ io.on("connection", (socket) => {
     if (currentQuestion <= numClients * 10 + 1) {
       //decode from HTML special characters, remove the quotation marks,
       let question = GameConfig.getQuestionsForGame(admin)
-     
+
       question = he.decode(
         JSON.stringify(question.questions[currentQuestion]).slice(1, -1)
       );
@@ -125,11 +125,11 @@ io.on("connection", (socket) => {
         options: options,
         userTurn: userTurnConfig
       };
-    
+
       io.to(admin).emit("question", questionInfo);
     } else {
       let players = GameConfig.getAllUsers(admin)
-  
+
       for(let i = 0; i < numClients; i++){
         let player = players[i].user
         let settings = GameConfig.getUserScores(player, admin)
@@ -145,7 +145,7 @@ io.on("connection", (socket) => {
   // SET MODEL QUESTIONS
 
 
-  // GETTER 
+  // GETTER
 
   socket.on("answer", (e) => {
     console.log('received answer!', e.admin)
@@ -169,7 +169,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("user starts quiz", async (roomId) => {
-  
+
 
     let questionSettings = GameConfig.getSettings(roomId);
     const questions = await getQuestions(
@@ -177,7 +177,7 @@ io.on("connection", (socket) => {
       questionSettings.category,
       questionSettings.difficulty
     );
-  
+
     GameConfig.setQuestionsForGame(roomId, questions)
     sendQuestion(roomId)
 
