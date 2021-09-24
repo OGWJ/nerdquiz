@@ -33,7 +33,7 @@ This is a multiplayer(hopefully) nerd quiz game.
 * Turned-base
 * Displaying available rooms correctly on the client-side UI
 
-## Process
+## Development Process
 
 #### Project Planning
 
